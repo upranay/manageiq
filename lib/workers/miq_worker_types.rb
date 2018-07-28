@@ -2,6 +2,9 @@
 # global namespace
 
 MIQ_WORKER_TYPES = {
+  "ManageIQ::Providers::Telefonica::CloudManager::EventCatcher"                 => %i(manageiq_default),
+  "ManageIQ::Providers::Telefonica::CloudManager::MetricsCollectorWorker"       => %i(manageiq_default),
+  "ManageIQ::Providers::Telefonica::CloudManager::RefreshWorker"                => %i(manageiq_default),
   "ManageIQ::Providers::Amazon::AgentCoordinatorWorker"                         => %i(manageiq_default),
   "ManageIQ::Providers::Amazon::CloudManager::EventCatcher"                     => %i(manageiq_default),
   "ManageIQ::Providers::Amazon::CloudManager::MetricsCollectorWorker"           => %i(manageiq_default),
