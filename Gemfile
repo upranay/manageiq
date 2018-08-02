@@ -82,7 +82,7 @@ gem "american_date"
 # This default is used to automatically require all of our gems in processes that don't specify which bundler groups they want.
 #
 ### providers
-gem 'manageiq-providers-telefonica', :path => 'plugins/manageiq-providers-telefonica'
+gem 'manageiq-providers-telefonica', :path => '../manageiq-providers-telefonica'
 
 group :amazon, :manageiq_default do
   manageiq_plugin "manageiq-providers-amazon"
