@@ -25,6 +25,9 @@ class ServiceTemplate < ApplicationRecord
     "vmware"                     => N_("VMware")
   }.freeze
 
+  SERVICE_TYPE_ATOMIC    = 'atomic'.freeze
+  SERVICE_TYPE_COMPOSITE = 'composite'.freeze
+
   RESOURCE_ACTION_UPDATE_ATTRS = [:dialog,
                                   :dialog_id,
                                   :fqname,
@@ -38,6 +41,8 @@ class ServiceTemplate < ApplicationRecord
   include NewWithTypeStiMixin
   include TenancyMixin
   include ArchivedMixin
+  include ReservedMixin
+  reserve_attribute :internal, :boolean
   include_concern 'Filter'
 
   belongs_to :tenant
@@ -55,6 +60,7 @@ class ServiceTemplate < ApplicationRecord
   belongs_to :service_template_catalog
 
   has_many   :dialogs, -> { distinct }, :through => :resource_actions
+  has_many   :miq_schedules, :as => :resource, :dependent => :destroy
 
   has_many   :miq_requests, :as => :source, :dependent => :nullify
   has_many   :active_requests, -> { where(:request_state => MiqRequest::ACTIVE_STATES) }, :as => :source, :class_name => "MiqRequest"
@@ -65,7 +71,7 @@ class ServiceTemplate < ApplicationRecord
   virtual_column   :archived,                     :type => :boolean
   virtual_column   :active,                       :type => :boolean
 
-  default_value_for :service_type, 'unknown'
+  default_value_for :service_type, SERVICE_TYPE_ATOMIC
   default_value_for(:generic_subtype) { |st| 'custom' if st.prov_type == 'generic' }
 
   virtual_has_one :config_info, :class_name => "Hash"
@@ -74,6 +80,7 @@ class ServiceTemplate < ApplicationRecord
   scope :without_service_template_catalog_id,       ->         { where(:service_template_catalog_id => nil) }
   scope :with_existent_service_template_catalog_id, ->         { where.not(:service_template_catalog_id => nil) }
   scope :displayed,                                 ->         { where(:display => true) }
+  scope :public_service_templates,                  ->         { where.not(:id => Reserve.where(:resource_type => "ServiceTemplate").all.collect { |r| r.resource_id if r.reserved[:internal] }.compact) }
 
   def self.catalog_item_types
     ci_types = Set.new(Rbac.filtered(ExtManagementSystem.all).flat_map(&:supported_catalog_types))
@@ -206,37 +213,19 @@ class ServiceTemplate < ApplicationRecord
     svc
   end
 
-  def set_service_type
-    svc_type = nil
-
-    if service_resources.size.zero?
-      svc_type = 'unknown'
-    else
-      service_resources.each do |sr|
-        if sr.resource_type == 'Service' || sr.resource_type == 'ServiceTemplate'
-          svc_type = 'composite'
-          break
-        end
-      end
-      svc_type = 'atomic' if svc_type.blank?
-    end
-
-    self.service_type = svc_type
-  end
-
   def composite?
-    service_type.to_s.include?('composite')
+    service_type.to_s.include?(self.class::SERVICE_TYPE_COMPOSITE)
   end
 
   def atomic?
-    service_type.to_s.include?('atomic')
+    service_type.to_s.include?(self.class::SERVICE_TYPE_ATOMIC)
   end
 
   def type_display
     case service_type
-    when "atomic"    then "Item"
-    when "composite" then "Bundle"
-    when nil         then "Unknown"
+    when self.class::SERVICE_TYPE_ATOMIC    then "Item"
+    when self.class::SERVICE_TYPE_COMPOSITE then "Bundle"
+    when nil                                then "Unknown"
     else
       service_type.to_s.capitalize
     end
@@ -406,11 +395,6 @@ class ServiceTemplate < ApplicationRecord
     )
   end
 
-  def miq_schedules
-    schedule_ids = Reserve.where(:resource_type => "MiqSchedule").collect { |r| r.resource_id if r.reserved == {:resource_id => id} }.compact
-    MiqSchedule.where(:towhat => "ServiceTemplate", :id => schedule_ids)
-  end
-
   def order(user_or_id, options = nil, request_options = nil, schedule_time = nil)
     user     = user_or_id.kind_of?(User) ? user_or_id : User.find(user_or_id)
     workflow = provision_workflow(user, options, request_options)
@@ -425,8 +409,7 @@ class ServiceTemplate < ApplicationRecord
         :name         => "Order #{self.class.name} #{id} at #{time}",
         :description  => "Order #{self.class.name} #{id} at #{time}",
         :sched_action => {:args => [user.id, options, request_options], :method => "queue_order"},
-        :resource_id  => id,
-        :towhat       => "ServiceTemplate",
+        :resource     => self,
         :run_at       => {
           :interval   => {:unit => "once"},
           :start_time => time,
@@ -455,7 +438,7 @@ class ServiceTemplate < ApplicationRecord
 
   def add_resource(rsc, options = {})
     super
-    set_service_type
+    adjust_service_type
   end
 
   def self.display_name(number = 1)
@@ -540,5 +523,17 @@ class ServiceTemplate < ApplicationRecord
 
   def generic_custom_buttons
     CustomButton.buttons_for("Service")
+  end
+
+  def adjust_service_type
+    svc_type = self.class::SERVICE_TYPE_ATOMIC
+    service_resources.try(:each) do |sr|
+      if sr.resource_type == 'Service' || sr.resource_type == 'ServiceTemplate'
+        svc_type = self.class::SERVICE_TYPE_COMPOSITE
+        break
+      end
+    end
+
+    self.service_type = svc_type
   end
 end
