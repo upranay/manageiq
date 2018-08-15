@@ -41,8 +41,6 @@ class ServiceTemplate < ApplicationRecord
   include NewWithTypeStiMixin
   include TenancyMixin
   include ArchivedMixin
-  include ReservedMixin
-  reserve_attribute :internal, :boolean
   include_concern 'Filter'
 
   belongs_to :tenant
@@ -71,6 +69,7 @@ class ServiceTemplate < ApplicationRecord
   virtual_column   :archived,                     :type => :boolean
   virtual_column   :active,                       :type => :boolean
 
+  default_value_for :internal, false
   default_value_for :service_type, SERVICE_TYPE_ATOMIC
   default_value_for(:generic_subtype) { |st| 'custom' if st.prov_type == 'generic' }
 
@@ -80,7 +79,7 @@ class ServiceTemplate < ApplicationRecord
   scope :without_service_template_catalog_id,       ->         { where(:service_template_catalog_id => nil) }
   scope :with_existent_service_template_catalog_id, ->         { where.not(:service_template_catalog_id => nil) }
   scope :displayed,                                 ->         { where(:display => true) }
-  scope :public_service_templates,                  ->         { where.not(:id => Reserve.where(:resource_type => "ServiceTemplate").all.collect { |r| r.resource_id if r.reserved[:internal] }.compact) }
+  scope :public_service_templates,                  ->         { where.not(:internal => true) }
 
   def self.catalog_item_types
     ci_types = Set.new(Rbac.filtered(ExtManagementSystem.all).flat_map(&:supported_catalog_types))
@@ -380,7 +379,8 @@ class ServiceTemplate < ApplicationRecord
   end
   private_class_method :create_from_options
 
-  def provision_request(user, options = nil, request_options = nil)
+  def provision_request(user, options = nil, request_options = {})
+    request_options[:provision_workflow] = true
     result = order(user, options, request_options)
     raise result[:errors].join(", ") if result[:errors].any?
     result[:request]
@@ -395,7 +395,7 @@ class ServiceTemplate < ApplicationRecord
     )
   end
 
-  def order(user_or_id, options = nil, request_options = nil, schedule_time = nil)
+  def order(user_or_id, options = nil, request_options = {}, schedule_time = nil)
     user     = user_or_id.kind_of?(User) ? user_or_id : User.find(user_or_id)
     workflow = provision_workflow(user, options, request_options)
     if schedule_time
@@ -422,13 +422,15 @@ class ServiceTemplate < ApplicationRecord
     end
   end
 
-  def provision_workflow(user, dialog_options = nil, request_options = nil)
+  def provision_workflow(user, dialog_options = nil, request_options = {})
     dialog_options ||= {}
-    request_options ||= {}
+    request_options.delete(:provision_workflow) if request_options[:submit_workflow]
+
     ra_options = {
-      :target          => self,
-      :initiator       => request_options[:initiator],
-      :submit_workflow => request_options[:submit_workflow]
+      :target             => self,
+      :initiator          => request_options[:initiator],
+      :submit_workflow    => request_options[:submit_workflow],
+      :provision_workflow => request_options[:provision_workflow]
     }
 
     ResourceActionWorkflow.new(dialog_options, user, provision_action, ra_options).tap do |wf|
