@@ -202,6 +202,8 @@ class ExtManagementSystem < ApplicationRecord
                               [ManageIQ::Providers::Redhat::InfraManager, 'RHEV-M']
                             elsif ost.hypervisor.include?(:openstack_infra)
                               [ManageIQ::Providers::Openstack::InfraManager, 'OpenStack Director']
+                            elsif ost.hypervisor.include?(:openstack_infra)
+                              [ManageIQ::Providers::Telefonica::InfraManager, 'Telefonica Director']
                             else
                               [ManageIQ::Providers::Vmware::InfraManager, 'Virtual Center']
                             end

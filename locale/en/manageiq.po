@@ -2271,6 +2271,8 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Parent-EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Parent-Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/VmOrTemplate.yaml
@@ -2278,10 +2280,14 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Parent-EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Parent-Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/VmOrTemplate.yaml
@@ -2289,8 +2295,10 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/VmOrTemplate.yaml
 msgid "CPU (Mhz)"
 msgstr ""
@@ -3311,6 +3319,11 @@ msgstr ""
 msgid "Cloud Network (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::CloudNetwork
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::CloudNetwork::Private
+msgid "Cloud Network (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.CloudNetwork (plural form)
 #. TRANSLATORS: en.yml key: dictionary.table.cloud_network (plural form)
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
@@ -3336,6 +3349,12 @@ msgstr ""
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private (plural form)
 #. TRANSLATORS: en.yml key: dictionary.table.manageiq_providers_openstack_infra_manager_cloud_networks
 msgid "Cloud Networks (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::CloudNetwork (plural form)
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::CloudNetwork::Private (plural form)
+#. TRANSLATORS: en.yml key: dictionary.table.manageiq_providers_telefonica_infra_manager_cloud_networks
+msgid "Cloud Networks (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: file: product/views/CloudObjectStoreObject-cloud_object_store_objects.yaml
@@ -3406,6 +3425,10 @@ msgstr ""
 msgid "Cloud Provider (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager
+msgid "Cloud Provider (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Vmware::CloudManager
 msgid "Cloud Provider (VMware vCloud)"
 msgstr ""
@@ -3428,6 +3451,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::CloudManager (plural form)
 msgid "Cloud Providers (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager (plural form)
+msgid "Cloud Providers (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Vmware::CloudManager (plural form)
@@ -3460,6 +3487,10 @@ msgstr ""
 msgid "Cloud Subnet (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::CloudSubnet
+msgid "Cloud Subnet (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.CloudSubnet (plural form)
 #. TRANSLATORS: en.yml key: dictionary.table.cloud_subnet (plural form)
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
@@ -3482,6 +3513,10 @@ msgstr ""
 msgid "Cloud Subnets (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::CloudSubnet (plural form)
+msgid "Cloud Subnets (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.CloudTenant
 #. TRANSLATORS: en.yml key: dictionary.table.cloud_tenant
 #. TRANSLATORS: file: product/views/CloudObjectStoreContainer-cloud_object_store_containers.yaml
@@ -3501,6 +3536,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.table.manageiq_providers_openstack_cloud_manager_cloud_tenant
 msgid "Cloud Tenants (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.table.manageiq_providers_telefonica_cloud_manager_cloud_tenant
+msgid "Cloud Tenants (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
@@ -7110,6 +7149,11 @@ msgstr ""
 msgid "Credential (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::EmbeddedAnsible::AutomationManager::TelefonicaCredential
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::AnsibleTower::AutomationManager::TelefonicaCredential
+msgid "Credential (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::EmbeddedAnsible::AutomationManager::RackspaceCredential
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::AnsibleTower::AutomationManager::RackspaceCredential
 msgid "Credential (Rackspace)"
@@ -7168,6 +7212,11 @@ msgstr ""
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::EmbeddedAnsible::AutomationManager::OpenstackCredential (plural form)
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::AnsibleTower::AutomationManager::OpenstackCredential (plural form)
 msgid "Credentials (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::EmbeddedAnsible::AutomationManager::TelefonicaCredential (plural form)
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::AnsibleTower::AutomationManager::TelefonicaCredential (plural form)
+msgid "Credentials (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::EmbeddedAnsible::AutomationManager::RackspaceCredential (plural form)
@@ -8715,6 +8764,17 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+msgid "Disk I/O (blocks per second)"
+msgstr ""
+
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 msgid "Disk I/O (blocks per second)"
 msgstr ""
 
@@ -12186,8 +12246,16 @@ msgstr ""
 msgid "External Cloud Network (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::CloudNetwork::Public
+msgid "External Cloud Network (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public (plural form)
 msgid "External Cloud Networks (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::CloudNetwork::Public (plural form)
+msgid "External Cloud Networks (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
@@ -12558,6 +12626,10 @@ msgstr ""
 msgid "Floating IP (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::FloatingIp
+msgid "Floating IP (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.FloatingIp (plural form)
 #. TRANSLATORS: en.yml key: dictionary.table.floating_ips (plural form)
 #. TRANSLATORS: en.yml key: dictionary.table.floating_ip (plural form)
@@ -12571,6 +12643,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::NetworkManager::FloatingIp (plural form)
 msgid "Floating IPs (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::FloatingIp (plural form)
+msgid "Floating IPs (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: file: product/views/FloatingIp.yaml
@@ -13788,9 +13864,11 @@ msgstr ""
 
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Storage.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Storage.yaml
 #. TRANSLATORS: file: product/views/CimBaseStorageExtent.yaml
 #. TRANSLATORS: file: product/views/EmsCluster.yaml
@@ -14412,6 +14490,10 @@ msgstr ""
 msgid "Infrastructure Provider (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager
+msgid "Infrastructure Provider (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Redhat::InfraManager
 msgid "Infrastructure Provider (Red Hat)"
 msgstr ""
@@ -14434,6 +14516,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::InfraManager (plural form)
 msgid "Infrastructure Providers (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager (plural form)
+msgid "Infrastructure Providers (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Redhat::InfraManager (plural form)
@@ -14480,6 +14566,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::CloudManager::Vm
 msgid "Instance (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager::Vm
+msgid "Instance (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Vmware::CloudManager::Vm
@@ -14540,6 +14630,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::CloudManager::Vm (plural form)
 msgid "Instances (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager::Vm (plural form)
+msgid "Instances (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Vmware::CloudManager::Vm (plural form)
@@ -15966,6 +16060,8 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_ContainerManager.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Parent-EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Parent-Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/VmOrTemplate.yaml
@@ -15974,6 +16070,8 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Container.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ContainerGroup.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ContainerNode.yaml
@@ -15985,17 +16083,21 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_ContainerManager.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Parent-EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Parent-Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/VmOrTemplate.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/Container.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ContainerGroup.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ContainerNode.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/VmOrTemplate.yaml
 msgid "Memory (MB)"
 msgstr ""
@@ -20732,6 +20834,17 @@ msgstr ""
 msgid "Network I/O (datagrams per second)"
 msgstr ""
 
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
+msgid "Network I/O (datagrams per second)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.column.abs_max_net_usage_rate_average_value
 msgid "Network I/O - Absolute Max Usage Rate (KBps)"
 msgstr ""
@@ -20846,6 +20959,10 @@ msgstr ""
 msgid "Network Port (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::NetworkPort
+msgid "Network Port (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.NetworkPort (plural form)
 #. TRANSLATORS: en.yml key: dictionary.table.network_port (plural form)
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
@@ -20868,6 +20985,10 @@ msgstr ""
 msgid "Network Ports (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::NetworkPort (plural form)
+msgid "Network Ports (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.table.ems_network
 #. TRANSLATORS: file: product/views/CloudNetwork.yaml
 #. TRANSLATORS: file: product/views/CloudSubnet.yaml
@@ -20886,6 +21007,10 @@ msgstr ""
 msgid "Network Provider (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager
+msgid "Network Provider (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.table.ems_network (plural form)
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
 #. TRANSLATORS: file: product/views/ManageIQ_Providers_NetworkManager.yaml
@@ -20898,6 +21023,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::NetworkManager (plural form)
 msgid "Network Providers (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager (plural form)
+msgid "Network Providers (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.NetworkRouter
@@ -20914,6 +21043,10 @@ msgstr ""
 msgid "Network Router (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::NetworkRouter
+msgid "Network Router (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.NetworkRouter (plural form)
 #. TRANSLATORS: en.yml key: dictionary.table.network_router (plural form)
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
@@ -20926,6 +21059,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter (plural form)
 msgid "Network Routers (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::NetworkRouter (plural form)
+msgid "Network Routers (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: file: product/reports/110_Configuration Management - Hosts/080_Network information.yaml
@@ -22836,6 +22973,9 @@ msgstr ""
 msgid "OpenStack"
 msgstr ""
 
+msgid "Telefonica"
+msgstr ""
+
 #. TRANSLATORS: file: product/views/OpenscapRuleResult.yaml
 msgid "Openscap Rule Results"
 msgstr ""
@@ -23040,6 +23180,11 @@ msgstr ""
 msgid "Orchestration Stack (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager::OrchestrationStack
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager::OrchestrationStack
+msgid "Orchestration Stack (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::CloudManager::OrchestrationStack (plural form)
 #. TRANSLATORS: en.yml key: dictionary.model.OrchestrationStack (plural form)
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
@@ -23057,6 +23202,11 @@ msgstr ""
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack (plural form)
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack (plural form)
 msgid "Orchestration Stacks (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager::OrchestrationStack (plural form)
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager::OrchestrationStack (plural form)
+msgid "Orchestration Stacks (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.OrchestrationTemplate
@@ -26615,6 +26765,10 @@ msgstr ""
 msgid "Security Group (OpenStack)"
 msgstr ""
 
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::SecurityGroup
+msgid "Security Group (Telefonica)"
+msgstr ""
+
 #. TRANSLATORS: en.yml key: dictionary.model.SecurityGroup (plural form)
 #. TRANSLATORS: en.yml key: dictionary.table.security_group (plural form)
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
@@ -26637,6 +26791,10 @@ msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup (plural form)
 msgid "Security Groups (OpenStack)"
+msgstr ""
+
+#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::NetworkManager::SecurityGroup (plural form)
+msgid "Security Groups (Telefonica)"
 msgstr ""
 
 msgid "Security Token Service(STS) Token for this credential"
@@ -30777,9 +30935,11 @@ msgstr ""
 #. TRANSLATORS: file: db/fixtures/miq_product_features.yml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Parent-Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Parent-Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Storage.yaml
 #. TRANSLATORS: file: product/views/CimBaseStorageExtent.yaml
@@ -30801,9 +30961,11 @@ msgstr ""
 
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Parent-EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Parent-EmsCluster.yaml
 msgid "VMs & Hosts"
 msgstr ""
@@ -31747,6 +31909,7 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_tag_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_tag_charts/Host.yaml
 msgid "Virtual Machine CPU Ready (Percent)"
@@ -31779,13 +31942,18 @@ msgstr ""
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/daily_perf_charts/Storage.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_EmsCluster.yaml
 #. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_EmsCluster.yaml
+#. TRANSLATORS: file: product/charts/layouts/hourly_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/Host.yaml
 #. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Openstack_InfraManager_Host.yaml
+#. TRANSLATORS: file: product/charts/layouts/realtime_perf_charts/ManageIQ_Providers_Telefonica_InfraManager_Host.yaml
 #. TRANSLATORS: file: product/views/Vm-VmReconfigureRequest.yaml
 #. TRANSLATORS: file: product/views/Vm-all_vms.yaml
 #. TRANSLATORS: file: product/views/Vm.yaml

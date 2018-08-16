@@ -316,13 +316,34 @@ class EmsCluster < ApplicationRecord
   end
 
   cache_with_timeout(:node_types) do
-    if !openstack_clusters_exists?
-      :non_openstack
-    elsif non_openstack_clusters_exists?
-      :mixed_clusters
-    else
+
+    # if !openstack_clusters_exists?
+    #   :non_openstack
+    # elsif non_openstack_clusters_exists?
+    #   :mixed_clusters
+    # else
+    #   :openstack
+    # end
+
+    if openstack_clusters_exists?
       :openstack
+    elsif telefonica_clusters_exists?
+      :telefonica
+    elsif non_openstack_clusters_exists? && non_telefonica_clusters_exists?
+      :mixed_clusters
+    elsif !openstack_clusters_exists? && telefonica_clusters_exists?
+      :non_openstack
+    else
+      :non_telefonica
     end
+
+    # if !telefonica_clusters_exists?
+    #   :non_telefonica
+    # elsif non_telefonica_clusters_exists?
+    #   :mixed_clusters
+    # else
+    #   :telefonica
+    # end
   end
 
   def self.openstack_clusters_exists?
@@ -337,6 +358,20 @@ class EmsCluster < ApplicationRecord
 
   def openstack_cluster?
     ext_management_system.class == ManageIQ::Providers::Openstack::InfraManager
+  end
+
+  def self.telefonica_clusters_exists?
+    ems = ManageIQ::Providers::Telefonica::InfraManager.pluck(:id)
+    ems.empty? ? false : EmsCluster.where(:ems_id => ems).exists?
+  end
+
+  def self.non_telefonica_clusters_exists?
+    ems = ManageIQ::Providers::Telefonica::InfraManager.pluck(:id)
+    EmsCluster.where.not(:ems_id => ems).exists?
+  end
+
+  def telefonica_cluster?
+    ext_management_system.class == ManageIQ::Providers::Telefonica::InfraManager
   end
 
   def self.display_name(number = 1)

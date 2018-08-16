@@ -20,6 +20,7 @@ class Host < ApplicationRecord
     "kubevirt"        => "KubeVirt",
     "vmware"          => "VMware",
     "openstack_infra" => "OpenStack Infrastructure",
+    "telefonica_infra"=> "Telefonica Infrastructure",
     "unknown"         => "Unknown",
     nil               => "Unknown",
   }.freeze
@@ -960,6 +961,11 @@ class Host < ApplicationRecord
           return # only create ems instance, no host.
         end
 
+        if %i(virtualcenter scvmm rhevm telefonica_infra).any? { |ems_type| ost.hypervisor.include?(ems_type) }
+          ExtManagementSystem.create_discovered_ems(ost)
+          return # only create ems instance, no host.
+        end
+
         host = new(
           :name      => "#{ost.ipaddr} - discovered #{Time.now.utc.strftime("%Y-%m-%d %H:%M %Z")}",
           :ipaddress => ost.ipaddr,
@@ -1394,6 +1400,13 @@ class Host < ApplicationRecord
               Benchmark.realtime_block(:refresh_openstack_services) { refresh_openstack_services(ssu) }
             end
 
+            #Click2Cloud: refresh_telefonica_services should run after refresh_services and refresh_fs_files
+            if respond_to?(:refresh_telefonica_services)
+              _log.info("Refreshing Telefonica Services for #{log_target}")
+              task.update_status("Active", "Ok", "Refreshing Telefonica Services") if task
+              Benchmark.realtime_block(:refresh_telefonica_services) { refresh_telefonica_services(ssu) }
+            end
+
             save
           end
         rescue MiqException::MiqSshUtilHostKeyMismatch
@@ -1726,13 +1739,27 @@ class Host < ApplicationRecord
   end
 
   cache_with_timeout(:node_types) do # TODO: This doesn't belong here
-    if !openstack_hosts_exists?
-      :non_openstack
-    elsif non_openstack_hosts_exists?
-      :mixed_hosts
-    else
+    # if !openstack_hosts_exists?
+    #   :non_openstack
+    # elsif non_openstack_hosts_exists?
+    #   :mixed_hosts
+    # else
+    #   :openstack
+    # end
+
+    if openstack_hosts_exists?
       :openstack
+    elsif telefonica_hosts_exists?
+      :telefonica
+    elsif non_openstack_hosts_exists? && non_telefonica_hosts_exists?
+      :mixed_hosts
+    elsif !openstack_hosts_exists? && telefonica_hosts_exists?
+      :non_openstack
+    else
+      :non_telefonica
     end
+
+
   end
 
   def self.openstack_hosts_exists? # TODO: This doesn't belong here
@@ -1747,6 +1774,20 @@ class Host < ApplicationRecord
 
   def openstack_host? # TODO: This doesn't belong here
     ext_management_system.class == ManageIQ::Providers::Openstack::InfraManager
+  end
+
+  def self.telefonica_hosts_exists? # TODO: This doesn't belong here
+    ems = ManageIQ::Providers::Telefonica::InfraManager.pluck(:id)
+    ems.empty? ? false : Host.where(:ems_id => ems).exists?
+  end
+
+  def self.non_telefonica_hosts_exists? # TODO: This doesn't belong here
+    ems = ManageIQ::Providers::Telefonica::InfraManager.pluck(:id)
+    Host.where.not(:ems_id => ems).exists?
+  end
+
+  def telefonica_host? # TODO: This doesn't belong here
+    ext_management_system.class == ManageIQ::Providers::Telefonica::InfraManager
   end
 
   def writable_storages
