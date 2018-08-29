@@ -251,7 +251,7 @@ describe CustomButton do
         "disabled_text"         => nil,
         "enablement_expression" => nil,
         "applies_to_class"      => nil,
-        "options"               => nil,
+        "options"               => {},
         "userid"                => nil,
         "wait_for_complete"     => nil,
         "created_on"            => nil,
@@ -291,5 +291,40 @@ describe CustomButton do
     service_template2 = FactoryGirl.create(:service_template)
     button = FactoryGirl.create(:custom_button, :applies_to => service_template1)
     expect { button.copy(:applies_to => service_template2) }.to change { CustomButton.count }.by(1)
+  end
+
+  context do
+    let(:vm)              { FactoryGirl.create(:vm_vmware) }
+    let(:user)            { FactoryGirl.create(:user_with_group) }
+    let(:resource_action) { FactoryGirl.create(:resource_action, :ae_namespace => 'SYSTEM', :ae_class => 'PROCESS', :ae_instance => 'Request') }
+    let(:custom_button)   { FactoryGirl.create(:custom_button, :applies_to => vm.class, :resource_action => resource_action) }
+
+    before do
+      EvmSpecHelper.local_miq_server(:is_master => true, :zone => Zone.seed)
+    end
+
+    %i(invoke invoke_async).each do |method|
+      describe "##{method}" do
+        it "publishes CustomButtonEvent" do
+          Timecop.freeze(Time.now.utc) do
+            User.with_user(user) { custom_button.send(method, vm, 'UI') }
+            expect(CustomButtonEvent.first.timestamp).to be_within(0.01).of(Time.now.utc)
+          end
+
+          expect(CustomButtonEvent.count).to eq(1)
+          expect(CustomButtonEvent.first).to have_attributes(
+            :source      => 'UI',
+            :target_id   => vm.id,
+            :target_type => 'VmOrTemplate',
+            :type        => 'CustomButtonEvent',
+            :event_type  => 'button.trigger.start',
+            :user_id     => user.id
+          )
+          expect(CustomButtonEvent.first[:full_data]).to include(
+            :automate_entry_point => "/SYSTEM/PROCESS/Request"
+          )
+        end
+      end
+    end
   end
 end

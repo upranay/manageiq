@@ -289,6 +289,23 @@
     search_type: default
     db: Host
 - attributes:
+    name: default_Platform / ESX 6.7
+    description: Platform / ESX 6.7
+    filter: !ruby/object:MiqExpression
+      exp:
+        and:
+        - "=":
+            field: Host-vmm_vendor
+            value: vmware
+        - INCLUDES:
+            field: Host-vmm_product
+            value: ESX
+        - "=":
+            field: Host-vmm_version
+            value: 6.7.0
+    search_type: default
+    db: Host
+- attributes:
     name: default_Platform / HyperV
     description: Platform / HyperV
     filter: !ruby/object:MiqExpression
@@ -340,13 +357,27 @@
     search_type: default
     db: Host
 - attributes:
+    name: default_Status / Orhaned
+    description: Status / Orhaned
+    filter: !ruby/object:MiqExpression
+      exp:
+        "=":
+          field: Host-archived
+          value: "true"
+    search_type: default
+    db: Host
+- attributes:
     name: default_Status / Running
     description: Status / Running
     filter: !ruby/object:MiqExpression
       exp:
-        INCLUDES:
-          field: Host-power_state
-          value: "on"
+        and:
+        - INCLUDES:
+            field: Host-power_state
+            value: "on"
+        - "=":
+            field: Host-archived
+            value: "false"
     search_type: default
     db: Host
 - attributes:
@@ -976,9 +1007,13 @@
     description: Status / Running
     filter: !ruby/object:MiqExpression
       exp:
-        "=":
-          field: VmCloud-power_state
-          value: "on"
+        and:
+        - "=":
+            field: VmCloud-power_state
+            value: "on"
+        - "=":
+            field: VmCloud-archived
+            value: "false"
     search_type: default
     db: ManageIQ::Providers::CloudManager::Vm
 - attributes:
