@@ -1,7 +1,7 @@
-module ManagerRefresh
-  class InventoryCollection
+module ManageIQ::Providers
+  class Inventory::Persister
     class Builder
-      class ContainerManager < ::ManagerRefresh::InventoryCollection::Builder
+      class ContainerManager < ::ManageIQ::Providers::Inventory::Persister::Builder
         # TODO: (agrare) Targeted refreshes will require adjusting the associations / arels. (duh)
         def container_projects
           add_properties(
@@ -225,6 +225,14 @@ module ManagerRefresh
             :secondary_refs       => {:by_container_project_and_name => %i(container_project name)},
             :attributes_blacklist => %i(namespace)
           )
+          add_common_default_values
+        end
+
+        def service_offerings
+          add_common_default_values
+        end
+
+        def service_parameters_sets
           add_common_default_values
         end
 

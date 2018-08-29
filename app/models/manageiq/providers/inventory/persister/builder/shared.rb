@@ -1,4 +1,4 @@
-module ManagerRefresh::InventoryCollection::Builder::Shared
+module ManageIQ::Providers::Inventory::Persister::Builder::Shared
   extend ActiveSupport::Concern
 
   included do

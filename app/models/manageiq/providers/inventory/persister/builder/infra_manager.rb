@@ -1,7 +1,7 @@
-module ManagerRefresh
-  class InventoryCollection
+module ManageIQ::Providers
+  class Inventory::Persister
     class Builder
-      class InfraManager < ::ManagerRefresh::InventoryCollection::Builder
+      class InfraManager < ::ManageIQ::Providers::Inventory::Persister::Builder
         def networks
           add_properties(
             :manager_ref                  => %i(hardware ipaddress ipv6address),
@@ -50,7 +50,7 @@ module ManagerRefresh
 
         def snapshots
           add_properties(
-            :manager_ref                  => %i(uid),
+            :manager_ref                  => %i(vm_or_template uid),
             :parent_inventory_collections => %i(vms miq_templates),
           )
         end
@@ -214,7 +214,14 @@ module ManagerRefresh
 
         def lans
           add_properties(
-            :manager_ref                  => %i(uid_ems),
+            :manager_ref                  => %i(switch uid_ems),
+            :parent_inventory_collections => %i(hosts),
+          )
+        end
+
+        def subnets
+          add_properties(
+            :manager_ref                  => %i(lan ems_ref),
             :parent_inventory_collections => %i(hosts),
           )
         end

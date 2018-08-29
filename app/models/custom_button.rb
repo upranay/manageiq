@@ -1,7 +1,7 @@
 class CustomButton < ApplicationRecord
   has_one :resource_action, :as => :resource, :dependent => :destroy, :autosave => true
 
-  serialize :options
+  serialize :options, Hash
   serialize :visibility_expression
   serialize :enablement_expression
   serialize :visibility
@@ -105,6 +105,7 @@ class CustomButton < ApplicationRecord
       :user_id    => args[:user_id],
       :group_id   => args[:miq_group_id],
       :tenant_id  => args[:tenant_id],
+      :timestamp  => Time.now.utc,
       :full_data  => {
         :args                 => args,
         :automate_entry_point => resource_action.ae_path,
