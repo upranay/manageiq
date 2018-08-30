@@ -1,0 +1,2 @@
+ERROR: "bundle add" was called with arguments ["fog-telefonica,", "/home/ubuntu"]
+Usage: "bundle add GEM VERSION"

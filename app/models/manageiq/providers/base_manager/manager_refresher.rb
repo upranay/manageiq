@@ -32,14 +32,14 @@ module ManageIQ
       # @param targets [Array] Array of targets which can be ManageIQ::Providers::BaseManager or ManagerRefresh::Target
       #        or ManagerRefresh::TargetCollection or ApplicationRecord we will be collecting data for.
       # @return [Array<Array>] Array of doubles [target, inventory] with target class from parameter and
-      #         ManagerRefresh::Inventory object
+      #         ManageIQ::Providers::Inventory object
       def collect_inventory_for_targets(ems, targets)
         targets_with_data = targets.collect do |target|
           target_name = target.try(:name) || target.try(:event_type)
 
           _log.info("Filtering inventory for #{target.class} [#{target_name}] id: [#{target.id}]...")
 
-          if refresher_options.try(:[], :inventory_object_refresh)
+          if inventory_object_refresh?
             inventory = builder_class_for(ems.class).build_inventory(ems, target)
           end
 
@@ -54,7 +54,7 @@ module ManageIQ
       # Persister object. For legacy refresh we invoke parse_legacy.
       # @param ems [ManageIQ::Providers::BaseManager] Manager which targets we want to parse
       # @param _target [Array] Not used in new refresh or legacy refresh by default.
-      # @param inventory [ManagerRefresh::Inventory] Inventory object having Parsers, Collector and Persister objects
+      # @param inventory [ManageIQ::Providers::Inventory] Inventory object having Parsers, Collector and Persister objects
       #        that we need for parsing.
       # @return [Array<Hash> or ManagerRefresh::Persister] Returns parsed Array of hashes for legacy refresh, or
       #         Persister object containing parsed data for new refresh.
@@ -62,7 +62,7 @@ module ManageIQ
         log_header = format_ems_for_logging(ems)
         _log.debug("#{log_header} Parsing inventory...")
         hashes_or_persister, = Benchmark.realtime_block(:parse_inventory) do
-          if refresher_options.try(:[], :inventory_object_refresh)
+          if inventory_object_refresh?
             inventory.parse
           else
             parsed, _ = Benchmark.realtime_block(:parse_legacy_inventory) { parse_legacy(ems) }
@@ -89,7 +89,7 @@ module ManageIQ
           all_targets, sub_ems_targets = targets.partition { |x| x.kind_of?(ExtManagementSystem) }
 
           unless sub_ems_targets.blank?
-            if refresher_options.try(:[], :allow_targeted_refresh)
+            if allow_targeted_refresh?
               # We can disable targeted refresh with a setting, then we will just do full ems refresh on any event
               ems_event_collection = ManagerRefresh::TargetCollection.new(:targets    => sub_ems_targets,
                                                                           :manager_id => ems_id)

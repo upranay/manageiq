@@ -92,6 +92,7 @@ class Host < ApplicationRecord
                             :inverse_of => :host
   has_many                  :host_aggregate_hosts, :dependent => :destroy
   has_many                  :host_aggregates, :through => :host_aggregate_hosts
+  has_one                   :conversion_host, :as => :resource, :dependent => :destroy, :inverse_of => :resource
 
   # Physical server reference
   belongs_to :physical_server, :inverse_of => :host
@@ -140,6 +141,7 @@ class Host < ApplicationRecord
   virtual_delegate :annotation, :to => :hardware, :prefix => "v", :allow_nil => true
   virtual_column :vmm_vendor_display,           :type => :string
   virtual_column :ipmi_enabled,                 :type => :boolean
+  virtual_column :archived, :type => :boolean
 
   virtual_has_many   :resource_pools,                               :uses => :all_relationships
   virtual_has_many   :miq_scsi_luns,                                :uses => {:hardware => {:storage_adapters => {:miq_scsi_targets => :miq_scsi_luns}}}
@@ -1809,6 +1811,7 @@ class Host < ApplicationRecord
   def archived?
     ems_id.nil?
   end
+  alias archived archived?
 
   def normalized_state
     return 'archived' if archived?

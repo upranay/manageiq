@@ -65,7 +65,7 @@ gem "rugged",                         "~>0.25.0",      :require => false
 gem "simple-rss",                     "~>1.3.1",       :require => false
 gem "snmp",                           "~>1.2.0",       :require => false
 gem "sqlite3",                                         :require => false
-gem "trollop",                        "~>2.0",         :require => false
+gem "trollop",                        "~>2.1.3",       :require => false
 
 # Modified gems (forked on Github)
 gem "ruport",                         "=1.7.0",                       :git => "https://github.com/ManageIQ/ruport.git", :tag => "v1.7.0-3"
@@ -274,3 +274,6 @@ end
 # Load other additional Gemfiles
 #   Developers can create a file ending in .rb under bundler.d/ to specify additional development dependencies
 Dir.glob(File.join(__dir__, 'bundler.d/*.rb')).each { |f| eval_gemfile(File.expand_path(f, __dir__)) }
+
+# Added at 2018-08-29 23:12:07 +0530 by root:
+gem "fog-telefonica", "~> 0.1.25"

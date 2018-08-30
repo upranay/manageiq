@@ -51,6 +51,9 @@ module EmsRefresh
       h[e] << t unless e.nil?
     end
 
+    # Drop targets on EMSs which are using streaming refresh
+    targets_by_ems.reject! { |ems, _| ems.supports_streaming_refresh? }
+
     # Queue the refreshes
     task_ids = targets_by_ems.collect do |ems, ts|
       ts = ts.collect { |t| [t.class.to_s, t.id] }.uniq
@@ -127,7 +130,7 @@ module EmsRefresh
       # Take care of both String or Class type being passed in
       target_class = target_class.to_s.constantize unless target_class.kind_of?(Class)
 
-      if ManagerRefresh::Inventory.persister_class_for(target_class).blank? &&
+      if ManageIQ::Providers::Inventory.persister_class_for(target_class).blank? &&
          [VmOrTemplate, Host, PhysicalServer, ExtManagementSystem, ManagerRefresh::Target].none? { |k| target_class <= k }
         _log.warn("Unknown target type: [#{target_class}].")
         next
