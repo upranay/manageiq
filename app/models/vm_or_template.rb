@@ -1526,7 +1526,7 @@ class VmOrTemplate < ApplicationRecord
   end
 
   def num_cpu
-    hardware.nil? ? 0 : hardware.cpu_sockets
+    hardware.try(:cpu_sockets) || 0
   end
 
   def num_disks
@@ -1728,6 +1728,7 @@ class VmOrTemplate < ApplicationRecord
 
   supports_not :snapshots
   supports :destroy
+  supports :refresh_ems
 
   # Stop showing Reconfigure VM task unless the subclass allows
   def reconfigurable?
