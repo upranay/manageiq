@@ -4,6 +4,8 @@ module Vm::Operations::Guest
   included do
     api_relay_method :shutdown_guest
     api_relay_method :reboot_guest
+    api_relay_method :lock_guest
+    api_relay_method :unlock_guest
     api_relay_method :reset
   end
 
@@ -43,6 +45,30 @@ module Vm::Operations::Guest
   def reboot_guest
     check_policy_prevent(:request_vm_reboot_guest, :raw_reboot_guest)
   end
+
+  def raw_lock_guest
+    unless has_active_ems?
+      raise _("VM has no Provider, unable to lock guest OS")
+    end
+    run_command_via_parent(:vm_lock_guest)
+  end
+
+  def lock_guest
+    check_policy_prevent(:request_vm_lock_guest, :raw_lock_guest)
+    false
+  end
+
+  def raw_unlock_guest
+    unless has_active_ems?
+      raise _("VM has no Provider, unable to unlock guest OS")
+    end
+    run_command_via_parent(:vm_unlock_guest)
+  end
+
+  def unlock_guest
+    check_policy_prevent(:request_vm_unlock_guest, :raw_unlock_guest)
+  end
+
 
   def raw_reset
     unless has_active_ems?
