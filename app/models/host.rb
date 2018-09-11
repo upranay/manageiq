@@ -240,7 +240,7 @@ class Host < ApplicationRecord
   end
 
   def validate_unlock
-    validate_esx_host_connected_to_vc_with_power_state('unlock')
+    validate_esx_host_connected_to_vc_with_power_state('lock')
   end
 
   def validate_shutdown
