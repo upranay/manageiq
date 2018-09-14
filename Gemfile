@@ -44,6 +44,7 @@ gem "linux_admin",                    "~>1.2.1",       :require => false
 gem "log_decorator",                  "~>0.1",         :require => false
 gem "manageiq-api-client",            "~>0.3.0",       :require => false
 gem "manageiq-messaging",                              :require => false, :git => "https://github.com/ManageIQ/manageiq-messaging", :branch => "master"
+gem "manageiq-postgres_ha_admin",     "~>3.0",         :require => false
 gem "memoist",                        "~>0.15.0",      :require => false
 gem "mime-types",                     "~>3.0",         :path => File.expand_path("mime-types-redirector", __dir__)
 gem "more_core_extensions",           "~>3.5"
@@ -61,7 +62,7 @@ gem "rest-client",                    "~>2.0.0",       :require => false
 gem "ripper_ruby_parser",             "~>1.2.0",       :require => false
 gem "ruby-progressbar",               "~>1.7.0",       :require => false
 gem "rubyzip",                        "~>1.2.1",       :require => false
-gem "rugged",                         "~>0.25.0",      :require => false
+gem "rugged",                         "~>0.27.0",      :require => false
 gem "simple-rss",                     "~>1.3.1",       :require => false
 gem "snmp",                           "~>1.2.0",       :require => false
 gem "sqlite3",                                         :require => false
