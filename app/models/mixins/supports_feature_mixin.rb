@@ -105,8 +105,6 @@ module SupportsFeatureMixin
     :publish                             => 'Publishing',
     :quick_stats                         => 'Quick Stats',
     :reboot_guest                        => 'Reboot Guest Operation',
-    :lock_guest                          => 'Lock Guest Operation',
-    :unlock_guest                        => 'Unlock Guest Operation',
     :reconfigure                         => 'Reconfiguration',
     :reconfigure_disks                   => 'Reconfigure Virtual Machines Disks',
     :reconfigure_disksize                => 'Reconfigure Virtual Machines Disk Size',
