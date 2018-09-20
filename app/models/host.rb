@@ -235,14 +235,6 @@ class Host < ApplicationRecord
     validate_esx_host_connected_to_vc_with_power_state('on')
   end
 
-  def validate_lock
-    validate_esx_host_connected_to_vc_with_power_state( %w(on off) )
-  end
-
-  def validate_unlock
-    validate_esx_host_connected_to_vc_with_power_state('lock')
-  end
-
   def validate_shutdown
     validate_esx_host_connected_to_vc_with_power_state('on')
   end
@@ -452,26 +444,6 @@ class Host < ApplicationRecord
       check_policy_prevent("request_host_reboot", "vim_reboot")
     else
       _log.warn("Cannot reboot because <#{msg[:message]}>")
-    end
-  end
-
-  def lock
-    msg = validate_lock
-    LOGS.debug "..................INSIDE lock of host.rb ABCD"
-    if msg[:available] && respond_to?(:vim_lock)
-      check_policy_prevent("request_host_lock", "vim_lock")
-    else
-      _log.warn("Cannot lock because <#{msg[:message]}>")
-    end
-  end
-  #
-  def unlock
-    msg = validate_unlock
-    LOGS.debug "..................INSIDE unlock of host.rb ABCD"
-    if msg[:available] && respond_to?(:vim_unlock)
-      check_policy_prevent("request_host_unlock", "vim_unlock")
-    else
-      _log.warn("Cannot unlock because <#{msg[:message]}>")
     end
   end
 

@@ -53,7 +53,7 @@ class VmOrTemplate < ApplicationRecord
     "unknown"   => "Unknown"
   }
 
-  POWER_OPS = %w(start stop suspend reset shutdown_guest standby_guest reboot_guest lock_guest unlock_guest)
+  POWER_OPS = %w(start stop suspend reset shutdown_guest standby_guest reboot_guest)
   REMOTE_REGION_TASKS = POWER_OPS + %w(retire_now)
 
   validates_presence_of     :name, :location
