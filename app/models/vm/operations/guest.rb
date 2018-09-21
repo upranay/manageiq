@@ -57,8 +57,8 @@ module Vm::Operations::Guest
   end
 
   def lock_guest
-    # check_policy_prevent(:request_vm_lock_guest, :raw_lock_guest)
-    check_policy_prevent(:raw_lock_guest)
+    check_policy_prevent(:request_vm_lock_guest, :raw_lock_guest)
+    # check_policy_prevent(:raw_lock_guest)
   end
 
   def raw_unlock_guest
@@ -69,8 +69,8 @@ module Vm::Operations::Guest
   end
 
   def unlock_guest
-    # check_policy_prevent(:request_vm_unlock_guest, :raw_unlock_guest)
-    check_policy_prevent(:raw_unlock_guest)
+    check_policy_prevent(:request_vm_unlock_guest, :raw_unlock_guest)
+    # check_policy_prevent(:raw_unlock_guest)
   end
   #========================c2c
 
