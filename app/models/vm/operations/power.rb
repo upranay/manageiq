@@ -14,13 +14,17 @@ module Vm::Operations::Power
 
     supports :start do
       msg = unsupported_reason(:control) unless supports_control?
-      msg ||= _('The VM is powered on') if vm_powered_on?
+      msg ||= _('The VM is powered on') if (vm_powered_on?) || (vm_locked?)
       unsupported_reason_add(:start, msg) if msg
     end
   end
 
   def vm_powered_on?
     current_state == 'on'
+  end
+
+  def vm_locked?
+    current_state == 'locked'
   end
 
   def validate_stop
