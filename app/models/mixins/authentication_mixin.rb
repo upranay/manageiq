@@ -58,7 +58,7 @@ module AuthenticationMixin
   end
 
   def authentication_key_pairs
-    authentications.select { |a| a.kind_of?(ManageIQ::Providers::Openstack::InfraManager::AuthKeyPair) || a.kind_of?(ManageIQ::Providers::Telefonica::InfraManager::AuthKeyPair)}
+    authentications.select { |a| a.kind_of?(ManageIQ::Providers::Openstack::InfraManager::AuthKeyPair) }
   end
 
   def authentication_for_providers
