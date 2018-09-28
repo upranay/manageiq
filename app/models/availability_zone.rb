@@ -22,7 +22,7 @@ class AvailabilityZone < ApplicationRecord
   virtual_total :total_vms, :vms
 
   def self.available
-    where(arel_table[:type].not_eq("ManageIQ::Providers::Openstack::CloudManager::AvailabilityZoneNull"))
+      where(arel_table[:type].not_eq("ManageIQ::Providers::Openstack::CloudManager::AvailabilityZoneNull"))
   end
 
   PERF_ROLLUP_CHILDREN = :vms
