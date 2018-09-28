@@ -14,10 +14,13 @@ class ManageIQ::Providers::CloudManager::Template < ::MiqTemplate
   def self.eligible_for_provisioning
     super.where(:type => %w(ManageIQ::Providers::Amazon::CloudManager::Template
                             ManageIQ::Providers::Openstack::CloudManager::Template
+                            ManageIQ::Providers::Telefonica::CloudManager::Template
                             ManageIQ::Providers::Azure::CloudManager::Template
                             ManageIQ::Providers::Google::CloudManager::Template
                             ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate
-                            ManageIQ::Providers::Openstack::CloudManager::VolumeSnapshotTemplate))
+                            ManageIQ::Providers::Openstack::CloudManager::VolumeSnapshotTemplate
+                            ManageIQ::Providers::Telefonica::CloudManager::VolumeTemplate
+                            ManageIQ::Providers::Telefonica::CloudManager::VolumeSnapshotTemplate))
   end
 
   def self.class_by_ems(ext_management_system)

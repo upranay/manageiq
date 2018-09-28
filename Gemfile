@@ -43,7 +43,7 @@ gem "inventory_refresh",              "~>0.1.1",       :require => false
 gem "kubeclient",                     "~>2.4",         :require => false # For scaling pods at runtime
 gem "linux_admin",                    "~>1.2.1",       :require => false
 gem "log_decorator",                  "~>0.1",         :require => false
-gem "manageiq-api-client",            "~>0.3.1",       :require => false
+gem "manageiq-api-client",            "~>0.3.0",       :require => false
 gem "manageiq-messaging",                              :require => false, :git => "https://github.com/ManageIQ/manageiq-messaging", :branch => "master"
 gem "manageiq-postgres_ha_admin",     "~>3.0",         :require => false
 gem "memoist",                        "~>0.15.0",      :require => false
@@ -52,7 +52,7 @@ gem "more_core_extensions",           "~>3.5"
 gem "nakayoshi_fork",                 "~>0.0.3"  # provides a more CoW friendly fork (GC a few times before fork)
 gem "net-ldap",                       "~>0.16.1",      :require => false
 gem "net-ping",                       "~>1.7.4",       :require => false
-gem "openscap",                       "~>0.4.8",       :require => false
+gem "openscap",                       "~>0.4.3",       :require => false
 gem "pg",                             "~>0.18.2",      :require => false
 gem "pg-dsn_parser",                  "~>0.1.0",       :require => false
 gem "query_relation",                 "~>0.1.0",       :require => false
@@ -82,6 +82,11 @@ gem "american_date"
 # This default is used to automatically require all of our gems in processes that don't specify which bundler groups they want.
 #
 ### providers
+
+group :openstack, :manageiq_default do
+  manageiq_plugin "manageiq-providers-openstack"
+end
+
 group :amazon, :manageiq_default do
   manageiq_plugin "manageiq-providers-amazon"
   gem "amazon_ssa_support",                          :require => false, :git => "https://github.com/ManageIQ/amazon_ssa_support.git", :branch => "master" # Temporary dependency to be moved to manageiq-providers-amazon when officially release
@@ -129,8 +134,8 @@ group :openshift, :manageiq_default do
   gem "htauth",                         "2.0.0",         :require => false # used by container deployment
 end
 
-group :openstack, :manageiq_default do
-  manageiq_plugin "manageiq-providers-openstack"
+group :telefonica, :manageiq_default do
+  gem "manageiq-providers-telefonica", :git => 'https://github.com/aki-mathur/manageiq-providers-telefonica.git', :branch => "dev"
 end
 
 group :ovirt, :manageiq_default do
@@ -199,7 +204,7 @@ group :ui_dependencies do # Added to Bundler.require in config/application.rb
 end
 
 group :v2v, :ui_dependencies do
-  manageiq_plugin "manageiq-v2v"
+  gem "manageiq-v2v", :git => "https://github.com/ManageIQ/miq_v2v_ui_plugin.git", :branch => "master"
 end
 
 group :web_server, :manageiq_default do
@@ -241,6 +246,7 @@ unless ENV["APPLIANCE"]
   group :development, :test do
     gem "parallel_tests"
     gem "rspec-rails",      "~>3.6.0"
+    gem "byebug"
   end
 end
 
@@ -270,3 +276,6 @@ end
 # Load other additional Gemfiles
 #   Developers can create a file ending in .rb under bundler.d/ to specify additional development dependencies
 Dir.glob(File.join(__dir__, 'bundler.d/*.rb')).each { |f| eval_gemfile(File.expand_path(f, __dir__)) }
+
+# Added at 2018-08-29 23:12:07 +0530 by root:
+gem "fog-telefonica", "~> 0.1.27"

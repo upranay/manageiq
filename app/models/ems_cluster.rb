@@ -211,12 +211,12 @@ class EmsCluster < ApplicationRecord
 
   def scan(_userid = "system")
     MiqQueue.submit_job(
-      :service     => "smartstate",
-      :affinity    => ext_management_system,
-      :class_name  => self.class.to_s,
-      :method_name => "save_drift_state",
-      :instance_id => id,
-    )
+        :service     => "smartstate",
+        :affinity    => ext_management_system,
+        :class_name  => self.class.to_s,
+        :method_name => "save_drift_state",
+        :instance_id => id,
+        )
   end
 
   def get_reserve(field)
@@ -316,6 +316,7 @@ class EmsCluster < ApplicationRecord
   end
 
   cache_with_timeout(:node_types) do
+
     if !openstack_clusters_exists?
       :non_openstack
     elsif non_openstack_clusters_exists?

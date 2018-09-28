@@ -14,24 +14,24 @@ class Host < ApplicationRecord
   include CustomActionsMixin
 
   VENDOR_TYPES = {
-    # DB            Displayed
-    "microsoft"       => "Microsoft",
-    "redhat"          => "RedHat",
-    "kubevirt"        => "KubeVirt",
-    "vmware"          => "VMware",
-    "openstack_infra" => "OpenStack Infrastructure",
-    "unknown"         => "Unknown",
-    nil               => "Unknown",
+      # DB            Displayed
+      "microsoft"       => "Microsoft",
+      "redhat"          => "RedHat",
+      "kubevirt"        => "KubeVirt",
+      "vmware"          => "VMware",
+      "openstack_infra" => "OpenStack Infrastructure",
+      "unknown"         => "Unknown",
+      nil               => "Unknown",
   }.freeze
 
   HOST_DISCOVERY_TYPES = {
-    'vmware' => 'esx',
-    'ipmi'   => 'ipmi'
+      'vmware' => 'esx',
+      'ipmi'   => 'ipmi'
   }.freeze
 
   HOST_CREATE_OS_TYPES = {
-    'VMware ESX' => 'linux_generic',
-    # 'Microsoft Hyper-V' => 'windows_generic'
+      'VMware ESX' => 'linux_generic',
+      # 'Microsoft Hyper-V' => 'windows_generic'
   }.freeze
 
   validates_presence_of     :name
@@ -964,9 +964,9 @@ class Host < ApplicationRecord
         end
 
         host = new(
-          :name      => "#{ost.ipaddr} - discovered #{Time.now.utc.strftime("%Y-%m-%d %H:%M %Z")}",
-          :ipaddress => ost.ipaddr,
-          :hostname  => Socket.getaddrinfo(ost.ipaddr, nil)[0][2]
+            :name      => "#{ost.ipaddr} - discovered #{Time.now.utc.strftime("%Y-%m-%d %H:%M %Z")}",
+            :ipaddress => ost.ipaddr,
+            :hostname  => Socket.getaddrinfo(ost.ipaddr, nil)[0][2]
         )
 
         find_method        = host.detect_discovered_hypervisor(ost, ost.ipaddr)
@@ -1223,14 +1223,14 @@ class Host < ApplicationRecord
     include_mac_addr == true ? mac_address.present? : true
   end
   alias_method :ipmi_enabled, :ipmi_config_valid?
-
+  
   def set_custom_field(attribute, value)
     return unless is_vmware?
     raise _("Host has no EMS, unable to set custom attribute") unless ext_management_system
 
     ext_management_system.set_custom_field(self, :attribute => attribute, :value => value)
   end
-
+  
   def quickStats
     return @qs if @qs
     return {} unless supports_quick_stats?
@@ -1284,13 +1284,13 @@ class Host < ApplicationRecord
     timeout = ::Settings.host_scan.queue_timeout.to_i_with_method
     cb = {:class_name => task.class.name, :instance_id => task.id, :method_name => :queue_callback_on_exceptions, :args => ['Finished']}
     MiqQueue.put(
-      :class_name   => self.class.name,
-      :instance_id  => id,
-      :args         => [task.id],
-      :method_name  => "scan_from_queue",
-      :miq_callback => cb,
-      :msg_timeout  => timeout,
-      :zone         => my_zone
+        :class_name   => self.class.name,
+        :instance_id  => id,
+        :args         => [task.id],
+        :method_name  => "scan_from_queue",
+        :miq_callback => cb,
+        :msg_timeout  => timeout,
+        :zone         => my_zone
     )
   end
 
@@ -1375,6 +1375,13 @@ class Host < ApplicationRecord
               _log.info("Refreshing OpenStack Services for #{log_target}")
               task.update_status("Active", "Ok", "Refreshing OpenStack Services") if task
               Benchmark.realtime_block(:refresh_openstack_services) { refresh_openstack_services(ssu) }
+            end
+
+            #Click2Cloud: refresh_telefonica_services should run after refresh_services and refresh_fs_files
+            if respond_to?(:refresh_telefonica_services)
+              _log.info("Refreshing Telefonica Services for #{log_target}")
+              task.update_status("Active", "Ok", "Refreshing Telefonica Services") if task
+              Benchmark.realtime_block(:refresh_telefonica_services) { refresh_telefonica_services(ssu) }
             end
 
             save
@@ -1481,8 +1488,8 @@ class Host < ApplicationRecord
     conditions[:host_protocol] = host_protocol if host_protocol
 
     operating_system.firewall_rules.where(conditions)
-      .flat_map { |rule| rule.port_range.to_a }
-      .uniq.sort
+        .flat_map { |rule| rule.port_range.to_a }
+        .uniq.sort
   end
 
   def service_names
@@ -1638,13 +1645,13 @@ class Host < ApplicationRecord
             end
 
     perfs = klass.where(
-      [
-        "resource_id = ? AND capture_interval_name = ? AND timestamp >= ? AND timestamp <= ?",
-        id,
-        capture_interval.to_s,
-        time_range[0],
-        time_range[1]
-      ]
+        [
+            "resource_id = ? AND capture_interval_name = ? AND timestamp >= ? AND timestamp <= ?",
+            id,
+            capture_interval.to_s,
+            time_range[0],
+            time_range[1]
+        ]
     ).order("timestamp")
 
     if capture_interval.to_sym == :realtime && metric.to_s.starts_with?("v_pct_cpu_")
@@ -1674,11 +1681,11 @@ class Host < ApplicationRecord
             end
 
     vm_perfs = klass.where(
-      "parent_host_id = ? AND capture_interval_name = ? AND timestamp >= ? AND timestamp <= ?",
-      id,
-      capture_interval.to_s,
-      time_range[0],
-      time_range[1])
+        "parent_host_id = ? AND capture_interval_name = ? AND timestamp >= ? AND timestamp <= ?",
+        id,
+        capture_interval.to_s,
+        time_range[0],
+        time_range[1])
 
     perf_hash = {}
     vm_perfs.each do |p|
