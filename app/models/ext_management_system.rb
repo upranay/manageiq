@@ -80,6 +80,7 @@ class ExtManagementSystem < ApplicationRecord
   has_many :cloud_subnets, :foreign_key => :ems_id, :dependent => :destroy
 
   has_many :vms_and_templates_advanced_settings, :through => :vms_and_templates, :source => :advanced_settings
+  has_many :service_instances, :foreign_key => :ems_id, :dependent => :destroy, :inverse_of => :ext_management_system
   has_many :service_offerings, :foreign_key => :ems_id, :dependent => :destroy, :inverse_of => :ext_management_system
   has_many :service_parameters_sets, :foreign_key => :ems_id, :dependent => :destroy, :inverse_of => :ext_management_system
 
@@ -141,6 +142,8 @@ class ExtManagementSystem < ApplicationRecord
            :port=,
            :security_protocol,
            :security_protocol=,
+           :verify_ssl,
+           :verify_ssl=,
            :certificate_authority,
            :certificate_authority=,
            :to => :default_endpoint,
@@ -171,6 +174,7 @@ class ExtManagementSystem < ApplicationRecord
   virtual_total  :total_subnets,           :cloud_subnets
   virtual_column :supports_block_storage,  :type => :boolean
   virtual_column :supports_cloud_object_store_container_create, :type => :boolean
+  virtual_column :supports_cinder_volume_types, :type => :boolean
 
   virtual_aggregate :total_vcpus, :hosts, :sum, :total_vcpus
   virtual_aggregate :total_memory, :hosts, :sum, :ram_size
@@ -402,7 +406,13 @@ class ExtManagementSystem < ApplicationRecord
   def with_provider_connection(options = {})
     raise _("no block given") unless block_given?
     _log.info("Connecting through #{self.class.name}: [#{name}]")
-    yield connect(options)
+    connection = connect(options)
+    yield connection
+  ensure
+    disconnect(connection) if connection
+  end
+
+  def disconnect(_connection)
   end
 
   def self.refresh_all_ems_timer
@@ -578,6 +588,10 @@ class ExtManagementSystem < ApplicationRecord
 
   def supports_cloud_object_store_container_create
     supports_cloud_object_store_container_create?
+  end
+
+  def supports_cinder_volume_types
+    supports_cinder_volume_types?
   end
 
   def get_reserve(field)

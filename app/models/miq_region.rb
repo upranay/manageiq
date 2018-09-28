@@ -62,7 +62,11 @@ class MiqRegion < ApplicationRecord
   end
 
   def servers_for_settings_reload
-    miq_servers.where(:status => "started")
+    # This method is used to queue reload_settings for the resources which
+    # had settings changed.  If those servers are in a different region it is
+    # not possible to queue methods for them so we want to filter the
+    # returned servers to just ones in the current region.
+    miq_servers.in_my_region.where(:status => "started")
   end
 
   def active_miq_servers
@@ -109,8 +113,12 @@ class MiqRegion < ApplicationRecord
             _("Region [%{region_id}] does not match the database's region [%{db_id}]") % {:region_id => my_region_id,
                                                                                           :db_id     => db_region_id}
     end
+    create_params = {
+      :description    => "Region #{my_region_id}",
+      :migrations_ran => ActiveRecord::SchemaMigration.normalized_versions
+    }
 
-    create_with(:description => "Region #{my_region_id}").find_or_create_by!(:region => my_region_id) do
+    create_with(create_params).find_or_create_by!(:region => my_region_id) do
       _log.info("Creating Region [#{my_region_id}]")
     end
   end

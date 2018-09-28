@@ -194,6 +194,24 @@ describe Rbac::Filterer do
         tagged_group.save!
       end
 
+      context 'searching for instances of Switches' do
+        let!(:switch) { FactoryGirl.create_list(:switch, 2).first }
+
+        before do
+          switch.tag_with('/managed/environment/prod', :ns => '*')
+        end
+
+        it 'lists only tagged Switches' do
+          results = described_class.search(:class => Switch, :user => user).first
+          expect(results).to match_array [switch]
+        end
+
+        it 'lists only all Switches' do
+          results = described_class.search(:class => Switch, :user => admin_user).first
+          expect(results).to match_array Switch.all
+        end
+      end
+
       context 'searching for instances of ConfigurationScriptSource' do
         let!(:configuration_script_source) { FactoryGirl.create_list(:embedded_ansible_configuration_script_source, 2).first }
 
@@ -888,7 +906,7 @@ describe Rbac::Filterer do
     def get_rbac_results_for_and_expect_objects(klass, expected_objects)
       User.current_user = user
 
-      results = described_class.search(:class => klass).first
+      results = described_class.search(:targets => klass).first
       expect(results).to match_array(expected_objects)
     end
 
@@ -1015,14 +1033,14 @@ describe Rbac::Filterer do
 
         it 'can see all roles except for EvmRole-super_administrator' do
           expect(MiqUserRole.count).to eq(3)
-          get_rbac_results_for_and_expect_objects(MiqUserRole, [tenant_administrator_user_role, user_role])
+          get_rbac_results_for_and_expect_objects(MiqUserRole.select(:id, :name), [tenant_administrator_user_role, user_role])
         end
 
         it 'can see all groups except for group with role EvmRole-super_administrator' do
           expect(MiqUserRole.count).to eq(3)
           default_group_for_tenant = user.current_tenant.miq_groups.where(:group_type => "tenant").first
           super_admin_group
-          get_rbac_results_for_and_expect_objects(MiqGroup, [group, other_group, default_group_for_tenant])
+          get_rbac_results_for_and_expect_objects(MiqGroup.select(:id, :description), [group, other_group, default_group_for_tenant])
         end
 
         it 'can see all groups in the current tenant only' do

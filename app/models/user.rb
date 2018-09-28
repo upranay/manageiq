@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many   :notifications, :through => :notification_recipients
   has_many   :unseen_notification_recipients, -> { unseen }, :class_name => 'NotificationRecipient'
   has_many   :unseen_notifications, :through => :unseen_notification_recipients, :source => :notification
+  has_many   :authentications, :foreign_key => :evm_owner_id, :dependent => :nullify, :inverse_of => :evm_owner
   belongs_to :current_group, :class_name => "MiqGroup"
   has_and_belongs_to_many :miq_groups
   scope      :superadmins, lambda {
@@ -49,10 +50,10 @@ class User < ApplicationRecord
   serialize     :settings, Hash   # Implement settings column as a hash
   default_value_for(:settings) { Hash.new }
 
-  scope :with_same_userid, ->(id) { where(:userid => User.find(id).userid) }
+  scope :with_same_userid, ->(id) { where(:userid => User.where(:id => id).pluck(:userid)) }
 
   def self.with_roles_excluding(identifier)
-    where.not(:id => User.joins(:miq_groups => :miq_product_features)
+    where.not(:id => User.unscope(:select).joins(:miq_groups => :miq_product_features)
                              .where(:miq_product_features => {:identifier => identifier})
                              .select(:id))
   end

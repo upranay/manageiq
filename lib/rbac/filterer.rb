@@ -51,6 +51,7 @@ module Rbac
       Service
       ServiceTemplate
       Storage
+      Switch
       VmOrTemplate
     )
 
@@ -541,6 +542,10 @@ module Rbac
         scope = scope_to_tenant(scope, user, miq_group)
       elsif klass.respond_to?(:scope_by_cloud_tenant?) && klass.scope_by_cloud_tenant?
         scope = scope_to_cloud_tenant(scope, user, miq_group)
+      end
+
+      if klass.respond_to?(:rbac_scope_for_model)
+        scope = scope.rbac_scope_for_model(user)
       end
 
       if apply_rbac_directly?(klass)

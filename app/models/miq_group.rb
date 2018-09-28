@@ -14,6 +14,7 @@ class MiqGroup < ApplicationRecord
   has_many   :miq_widget_contents, :dependent => :destroy
   has_many   :miq_widget_sets, :as => :owner, :dependent => :destroy
   has_many   :miq_product_features, :through => :miq_user_role
+  has_many   :authentications, :dependent => :nullify
 
   virtual_delegate :miq_user_role_name, :to => :entitlement, :allow_nil => true
   virtual_column :read_only,          :type => :boolean
@@ -61,7 +62,7 @@ class MiqGroup < ApplicationRecord
   end
 
   def self.with_roles_excluding(identifier)
-    where.not(:id => MiqGroup.joins(:miq_product_features)
+    where.not(:id => MiqGroup.unscope(:select).joins(:miq_product_features)
                              .where(:miq_product_features => {:identifier => identifier})
                              .select(:id))
   end
@@ -228,9 +229,11 @@ class MiqGroup < ApplicationRecord
 
     create_with(
       :description         => "Tenant #{tenant_full_name} access",
-      :group_type          => TENANT_GROUP,
       :default_tenant_role => MiqUserRole.default_tenant_role
-    ).find_or_create_by!(:tenant_id => tenant.id)
+    ).find_or_create_by!(
+      :group_type => TENANT_GROUP,
+      :tenant_id  => tenant.id,
+    )
   end
 
   def self.sort_by_desc
