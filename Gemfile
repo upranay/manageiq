@@ -78,10 +78,14 @@ gem "ruport",                         "=1.7.0",                       :git => "h
 # https://github.com/jeremyevans/ruby-american_date
 gem "american_date"
 
+gem "fog-telefonica", :path => '../fog-telefonica'
+
 # Make sure to tag your new bundler group with the manageiq_default group in addition to your specific bundler group name.
 # This default is used to automatically require all of our gems in processes that don't specify which bundler groups they want.
 #
 ### providers
+
+gem 'manageiq-providers-telefonica', :path => '../manageiq-providers-telefonica'
 
 group :openstack, :manageiq_default do
   manageiq_plugin "manageiq-providers-openstack"
@@ -132,10 +136,6 @@ end
 group :openshift, :manageiq_default do
   manageiq_plugin "manageiq-providers-openshift"
   gem "htauth",                         "2.0.0",         :require => false # used by container deployment
-end
-
-group :telefonica, :manageiq_default do
-  gem "manageiq-providers-telefonica", :git => 'https://github.com/aki-mathur/manageiq-providers-telefonica.git', :branch => "dev"
 end
 
 group :ovirt, :manageiq_default do
@@ -276,6 +276,9 @@ end
 # Load other additional Gemfiles
 #   Developers can create a file ending in .rb under bundler.d/ to specify additional development dependencies
 Dir.glob(File.join(__dir__, 'bundler.d/*.rb')).each { |f| eval_gemfile(File.expand_path(f, __dir__)) }
+<<<<<<< HEAD
 
 # Added at 2018-08-29 23:12:07 +0530 by root:
 gem "fog-telefonica", "~> 0.1.27"
+=======
+>>>>>>> 84590813ce... miq worker
