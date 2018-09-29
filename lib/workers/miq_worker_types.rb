@@ -98,7 +98,6 @@ MIQ_WORKER_TYPES_IN_KILL_ORDER = %w(
   ManageIQ::Providers::Telefonica::NetworkManager::MetricsCollectorWorker
   ManageIQ::Providers::Redhat::NetworkManager::MetricsCollectorWorker
   ManageIQ::Providers::Openstack::InfraManager::MetricsCollectorWorker
-  ManageIQ::Providers::Telefonica::InfraManager::MetricsCollectorWorker
   EmbeddedAnsibleWorker
   MiqReportingWorker
   MiqSmartProxyWorker
@@ -131,7 +130,6 @@ MIQ_WORKER_TYPES_IN_KILL_ORDER = %w(
   ManageIQ::Providers::Telefonica::NetworkManager::RefreshWorker
   ManageIQ::Providers::Redhat::NetworkManager::RefreshWorker
   ManageIQ::Providers::Openstack::InfraManager::RefreshWorker
-  ManageIQ::Providers::Telefonica::InfraManager::RefreshWorker
   ManageIQ::Providers::StorageManager::CinderManager::RefreshWorker
   ManageIQ::Providers::StorageManager::SwiftManager::RefreshWorker
   ManageIQ::Providers::Vmware::CloudManager::RefreshWorker
@@ -156,7 +154,6 @@ MIQ_WORKER_TYPES_IN_KILL_ORDER = %w(
   ManageIQ::Providers::Redfish::PhysicalInfraManager::EventCatcher
   ManageIQ::Providers::Redhat::NetworkManager::EventCatcher
   ManageIQ::Providers::Openstack::InfraManager::EventCatcher
-  ManageIQ::Providers::Telefonica::InfraManager::EventCatcher
   ManageIQ::Providers::Amazon::CloudManager::EventCatcher
   ManageIQ::Providers::Azure::CloudManager::EventCatcher
   ManageIQ::Providers::AnsibleTower::AutomationManager::EventCatcher

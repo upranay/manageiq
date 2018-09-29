@@ -14,25 +14,24 @@ class Host < ApplicationRecord
   include CustomActionsMixin
 
   VENDOR_TYPES = {
-    # DB            Displayed
-    "microsoft"       => "Microsoft",
-    "redhat"          => "RedHat",
-    "kubevirt"        => "KubeVirt",
-    "vmware"          => "VMware",
-    "openstack_infra" => "OpenStack Infrastructure",
-    "telefonica_infra"=> "Telefonica Infrastructure",
-    "unknown"         => "Unknown",
-    nil               => "Unknown",
+      # DB            Displayed
+      "microsoft"       => "Microsoft",
+      "redhat"          => "RedHat",
+      "kubevirt"        => "KubeVirt",
+      "vmware"          => "VMware",
+      "openstack_infra" => "OpenStack Infrastructure",
+      "unknown"         => "Unknown",
+      nil               => "Unknown",
   }.freeze
 
   HOST_DISCOVERY_TYPES = {
-    'vmware' => 'esx',
-    'ipmi'   => 'ipmi'
+      'vmware' => 'esx',
+      'ipmi'   => 'ipmi'
   }.freeze
 
   HOST_CREATE_OS_TYPES = {
-    'VMware ESX' => 'linux_generic',
-    # 'Microsoft Hyper-V' => 'windows_generic'
+      'VMware ESX' => 'linux_generic',
+      # 'Microsoft Hyper-V' => 'windows_generic'
   }.freeze
 
   validates_presence_of     :name
@@ -964,15 +963,10 @@ class Host < ApplicationRecord
           return # only create ems instance, no host.
         end
 
-        if %i(virtualcenter scvmm rhevm telefonica_infra).any? { |ems_type| ost.hypervisor.include?(ems_type) }
-          ExtManagementSystem.create_discovered_ems(ost)
-          return # only create ems instance, no host.
-        end
-
         host = new(
-          :name      => "#{ost.ipaddr} - discovered #{Time.now.utc.strftime("%Y-%m-%d %H:%M %Z")}",
-          :ipaddress => ost.ipaddr,
-          :hostname  => Socket.getaddrinfo(ost.ipaddr, nil)[0][2]
+            :name      => "#{ost.ipaddr} - discovered #{Time.now.utc.strftime("%Y-%m-%d %H:%M %Z")}",
+            :ipaddress => ost.ipaddr,
+            :hostname  => Socket.getaddrinfo(ost.ipaddr, nil)[0][2]
         )
 
         find_method        = host.detect_discovered_hypervisor(ost, ost.ipaddr)
@@ -1290,13 +1284,13 @@ class Host < ApplicationRecord
     timeout = ::Settings.host_scan.queue_timeout.to_i_with_method
     cb = {:class_name => task.class.name, :instance_id => task.id, :method_name => :queue_callback_on_exceptions, :args => ['Finished']}
     MiqQueue.put(
-      :class_name   => self.class.name,
-      :instance_id  => id,
-      :args         => [task.id],
-      :method_name  => "scan_from_queue",
-      :miq_callback => cb,
-      :msg_timeout  => timeout,
-      :zone         => my_zone
+        :class_name   => self.class.name,
+        :instance_id  => id,
+        :args         => [task.id],
+        :method_name  => "scan_from_queue",
+        :miq_callback => cb,
+        :msg_timeout  => timeout,
+        :zone         => my_zone
     )
   end
 
@@ -1494,8 +1488,8 @@ class Host < ApplicationRecord
     conditions[:host_protocol] = host_protocol if host_protocol
 
     operating_system.firewall_rules.where(conditions)
-      .flat_map { |rule| rule.port_range.to_a }
-      .uniq.sort
+        .flat_map { |rule| rule.port_range.to_a }
+        .uniq.sort
   end
 
   def service_names
@@ -1651,13 +1645,13 @@ class Host < ApplicationRecord
             end
 
     perfs = klass.where(
-      [
-        "resource_id = ? AND capture_interval_name = ? AND timestamp >= ? AND timestamp <= ?",
-        id,
-        capture_interval.to_s,
-        time_range[0],
-        time_range[1]
-      ]
+        [
+            "resource_id = ? AND capture_interval_name = ? AND timestamp >= ? AND timestamp <= ?",
+            id,
+            capture_interval.to_s,
+            time_range[0],
+            time_range[1]
+        ]
     ).order("timestamp")
 
     if capture_interval.to_sym == :realtime && metric.to_s.starts_with?("v_pct_cpu_")
@@ -1687,11 +1681,11 @@ class Host < ApplicationRecord
             end
 
     vm_perfs = klass.where(
-      "parent_host_id = ? AND capture_interval_name = ? AND timestamp >= ? AND timestamp <= ?",
-      id,
-      capture_interval.to_s,
-      time_range[0],
-      time_range[1])
+        "parent_host_id = ? AND capture_interval_name = ? AND timestamp >= ? AND timestamp <= ?",
+        id,
+        capture_interval.to_s,
+        time_range[0],
+        time_range[1])
 
     perf_hash = {}
     vm_perfs.each do |p|
@@ -1722,27 +1716,13 @@ class Host < ApplicationRecord
   end
 
   cache_with_timeout(:node_types) do # TODO: This doesn't belong here
-    # if !openstack_hosts_exists?
-    #   :non_openstack
-    # elsif non_openstack_hosts_exists?
-    #   :mixed_hosts
-    # else
-    #   :openstack
-    # end
-
-    if openstack_hosts_exists?
-      :openstack
-    elsif telefonica_hosts_exists?
-      :telefonica
-    elsif non_openstack_hosts_exists? && non_telefonica_hosts_exists?
-      :mixed_hosts
-    elsif !openstack_hosts_exists? && telefonica_hosts_exists?
+    if !openstack_hosts_exists?
       :non_openstack
+    elsif non_openstack_hosts_exists?
+      :mixed_hosts
     else
-      :non_telefonica
+      :openstack
     end
-
-
   end
 
   def self.openstack_hosts_exists? # TODO: This doesn't belong here
@@ -1757,20 +1737,6 @@ class Host < ApplicationRecord
 
   def openstack_host? # TODO: This doesn't belong here
     ext_management_system.class == ManageIQ::Providers::Openstack::InfraManager
-  end
-
-  def self.telefonica_hosts_exists? # TODO: This doesn't belong here
-    ems = ManageIQ::Providers::Telefonica::InfraManager.pluck(:id)
-    ems.empty? ? false : Host.where(:ems_id => ems).exists?
-  end
-
-  def self.non_telefonica_hosts_exists? # TODO: This doesn't belong here
-    ems = ManageIQ::Providers::Telefonica::InfraManager.pluck(:id)
-    Host.where.not(:ems_id => ems).exists?
-  end
-
-  def telefonica_host? # TODO: This doesn't belong here
-    ext_management_system.class == ManageIQ::Providers::Telefonica::InfraManager
   end
 
   def writable_storages
