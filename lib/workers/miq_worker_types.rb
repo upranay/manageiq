@@ -39,17 +39,20 @@ MIQ_WORKER_TYPES = {
   "ManageIQ::Providers::Openstack::CloudManager::EventCatcher"                  => %i(manageiq_default),
   "ManageIQ::Providers::Openstack::CloudManager::MetricsCollectorWorker"        => %i(manageiq_default),
   "ManageIQ::Providers::Openstack::CloudManager::RefreshWorker"                 => %i(manageiq_default),
-  "ManageIQ::Providers::Telefonica::CloudManager::EventCatcher"                 => %i(manageiq_default),
-  "ManageIQ::Providers::Telefonica::CloudManager::MetricsCollectorWorker"       => %i(manageiq_default),
-  "ManageIQ::Providers::Telefonica::CloudManager::RefreshWorker"                => %i(manageiq_default),
   "ManageIQ::Providers::Openstack::InfraManager::EventCatcher"                  => %i(manageiq_default),
   "ManageIQ::Providers::Openstack::InfraManager::MetricsCollectorWorker"        => %i(manageiq_default),
   "ManageIQ::Providers::Openstack::InfraManager::RefreshWorker"                 => %i(manageiq_default),
   "ManageIQ::Providers::Openstack::NetworkManager::EventCatcher"                => %i(manageiq_default),
   "ManageIQ::Providers::Openstack::NetworkManager::MetricsCollectorWorker"      => %i(manageiq_default),
+  "ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventCatcher" => %i(manageiq_default),
+  "ManageIQ::Providers::Telefonica::CloudManager::EventCatcher"                  => %i(manageiq_default),
+  "ManageIQ::Providers::Telefonica::CloudManager::MetricsCollectorWorker"        => %i(manageiq_default),
+  "ManageIQ::Providers::Telefonica::CloudManager::RefreshWorker"                 => %i(manageiq_default),
+  "ManageIQ::Providers::Telefonica::InfraManager::EventCatcher"                  => %i(manageiq_default),
+  "ManageIQ::Providers::Telefonica::InfraManager::MetricsCollectorWorker"        => %i(manageiq_default),
+  "ManageIQ::Providers::Telefonica::InfraManager::RefreshWorker"                 => %i(manageiq_default),
   "ManageIQ::Providers::Telefonica::NetworkManager::EventCatcher"                => %i(manageiq_default),
   "ManageIQ::Providers::Telefonica::NetworkManager::MetricsCollectorWorker"      => %i(manageiq_default),
-  "ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventCatcher"  => %i(manageiq_default),
   "ManageIQ::Providers::Telefonica::StorageManager::CinderManager::EventCatcher" => %i(manageiq_default),
   "ManageIQ::Providers::Redfish::PhysicalInfraManager::EventCatcher"            => %i(manageiq_default),
   "ManageIQ::Providers::Redfish::PhysicalInfraManager::RefreshWorker"           => %i(manageiq_default),
@@ -146,10 +149,10 @@ MIQ_WORKER_TYPES_IN_KILL_ORDER = %w(
   ManageIQ::Providers::Openstack::CloudManager::EventCatcher
   ManageIQ::Providers::Openstack::NetworkManager::EventCatcher
   ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventCatcher
-  ManageIQ::Providers::Redfish::PhysicalInfraManager::EventCatcher
   ManageIQ::Providers::Telefonica::CloudManager::EventCatcher
   ManageIQ::Providers::Telefonica::NetworkManager::EventCatcher
   ManageIQ::Providers::Telefonica::StorageManager::CinderManager::EventCatcher
+  ManageIQ::Providers::Redfish::PhysicalInfraManager::EventCatcher
   ManageIQ::Providers::Redhat::NetworkManager::EventCatcher
   ManageIQ::Providers::Openstack::InfraManager::EventCatcher
   ManageIQ::Providers::Amazon::CloudManager::EventCatcher
