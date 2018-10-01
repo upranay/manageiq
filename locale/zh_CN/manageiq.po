@@ -14493,10 +14493,6 @@ msgstr "基础架构供应商 (Microsoft)"
 msgid "Infrastructure Provider (OpenStack)"
 msgstr "基础架构供应商（OpenStack）"
 
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager
-msgid "Infrastructure Provider (Telefonica)"
-msgstr "基础架构供应商（Telefonica）"
-
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Redhat::InfraManager
 msgid "Infrastructure Provider (Red Hat)"
 msgstr "基础架构供应商（Red Hat）"
@@ -14520,10 +14516,6 @@ msgstr "基础架构供应商 (Microsoft)"
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::InfraManager (plural form)
 msgid "Infrastructure Providers (OpenStack)"
 msgstr "基础架构供应商（Openstack）"
-
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager (plural form)
-msgid "Infrastructure Providers (Telefonica)"
-msgstr "基础架构供应商（Telefonica）"
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Redhat::InfraManager (plural form)
 msgid "Infrastructure Providers (Red Hat)"
@@ -23202,7 +23194,6 @@ msgstr "编配栈 (Microsoft Azure)"
 msgid "Orchestration Stacks (OpenStack)"
 msgstr "编配栈 (OpenStack)"
 
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager::OrchestrationStack (plural form)
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager::OrchestrationStack (plural form)
 msgid "Orchestration Stacks (Telefonica)"
 msgstr "编配栈 (Telefonica)"

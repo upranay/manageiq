@@ -9781,11 +9781,6 @@ msgstr ""
 msgid "Host (OpenStack)"
 msgstr ""
 
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager::Host
-#: ../config/dictionary_strings.rb:1952
-msgid "Host (Telefonica)"
-msgstr ""
-
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Redhat::InfraManager::Host
 #: ../config/dictionary_strings.rb:1956
 msgid "Host (Redhat)"
@@ -10140,11 +10135,6 @@ msgstr ""
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::InfraManager::Host (plural form)
 #: ../config/dictionary_strings.rb:1954
 msgid "Hosts (OpenStack)"
-msgstr ""
-
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager::Host (plural form)
-#: ../config/dictionary_strings.rb:1954
-msgid "Hosts (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Redhat::InfraManager::Host (plural form)
@@ -10509,11 +10499,6 @@ msgstr ""
 msgid "Infrastructure Provider (OpenStack)"
 msgstr ""
 
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager
-#: ../config/dictionary_strings.rb:1732
-msgid "Infrastructure Provider (Telefonica)"
-msgstr ""
-
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Redhat::InfraManager
 #: ../config/dictionary_strings.rb:1740
 msgid "Infrastructure Provider (Red Hat)"
@@ -10540,11 +10525,6 @@ msgstr ""
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Openstack::InfraManager (plural form)
 #: ../config/dictionary_strings.rb:1734
 msgid "Infrastructure Providers (OpenStack)"
-msgstr ""
-
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager (plural form)
-#: ../config/dictionary_strings.rb:1734
-msgid "Infrastructure Providers (Telefonica)"
 msgstr ""
 
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Redhat::InfraManager (plural form)
@@ -13746,7 +13726,6 @@ msgstr ""
 msgid "Orchestration Stack (OpenStack)"
 msgstr ""
 
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager::OrchestrationStack
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager::OrchestrationStack
 #: ../config/dictionary_strings.rb:1896 ../config/dictionary_strings.rb:1904
 msgid "Orchestration Stack (Telefonica)"
@@ -13779,7 +13758,6 @@ msgstr ""
 msgid "Orchestration Stacks (OpenStack)"
 msgstr ""
 
-#. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::InfraManager::OrchestrationStack (plural form)
 #. TRANSLATORS: en.yml key: dictionary.model.ManageIQ::Providers::Telefonica::CloudManager::OrchestrationStack (plural form)
 #: ../config/dictionary_strings.rb:1898 ../config/dictionary_strings.rb:1906
 msgid "Orchestration Stacks (Telefonica)"
