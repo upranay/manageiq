@@ -197,7 +197,6 @@ class MiqQueue < ApplicationRecord
       # TODO: can we transition to zone = nil
     when "notifier"
       options[:role] = service
-      options[:zone] = nil # any zone
     when "reporting"
       options[:queue_name] = "generic"
       options[:role] = service
@@ -205,6 +204,9 @@ class MiqQueue < ApplicationRecord
       options[:queue_name] = "smartproxy"
       options[:role] = "smartproxy"
     end
+
+    # Note, options[:zone] is set in 'put' via 'determine_queue_zone' and handles setting
+    # a nil (any) zone for regional roles.  Therefore, regional roles don't need to set zone here.
     put(options)
   end
 
@@ -565,6 +567,8 @@ class MiqQueue < ApplicationRecord
     )
   end
 
+  private_class_method :default_get_options
+
   # when searching miq_queue, we often want to see if a key is nil, or a particular value
   # given a set of keys, modify the params to have those values
   # example:
@@ -579,6 +583,8 @@ class MiqQueue < ApplicationRecord
     end
     options
   end
+
+  private_class_method :optional_values
 
   def destroy_potentially_stale_record
     destroy

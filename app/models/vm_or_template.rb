@@ -1824,4 +1824,6 @@ class VmOrTemplate < ApplicationRecord
   def self.arel_coalesce(values)
     Arel::Nodes::NamedFunction.new('COALESCE', values)
   end
+
+  private_class_method :arel_coalesce
 end
