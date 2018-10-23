@@ -1,6 +1,11 @@
 class CustomButton < ApplicationRecord
   has_one :resource_action, :as => :resource, :dependent => :destroy, :autosave => true
 
+  scope :with_array_order, lambda { |ids, column = :id, column_type = :bigint|
+    order = sanitize_sql_array(["array_position(ARRAY[?]::#{column_type}[], #{table_name}.#{column}::#{column_type})", ids])
+    order(order)
+  }
+
   serialize :options, Hash
   serialize :visibility_expression
   serialize :enablement_expression
@@ -96,7 +101,7 @@ class CustomButton < ApplicationRecord
   end
 
   def publish_event(source, target, args)
-    target.kind_of?(Array) ? target.each { |t| create_event(source, t, args) } : create_event(source, target, args)
+    Array(target).each { |t| create_event(source, t, args) }
   end
 
   def create_event(source, target, args)

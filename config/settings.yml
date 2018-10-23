@@ -222,6 +222,7 @@
       - VmCreatedEvent
       - VmDeployedEvent
       - VmRegisteredEvent
+      - VmClonedEvent
       :detail:
       - CloneVM_Task
       - CloneVM_Task_Complete
@@ -978,7 +979,8 @@
 :product:
   :name:
   :maindb: ExtManagementSystem
-  :container_deployment_wizard: false
+  :run_automate_methods_on_service_api_submit: false
+  :allow_api_service_ordering: true
 :prototype:
   :queue_type: miq_queue
   :artemis:
@@ -1098,7 +1100,9 @@
   :history:
     :keep_tasks: 1.week
     :purge_window_size: 1000
-
+:transformation:
+  :limits:
+    :max_concurrent_tasks_per_host: 10
 :ui:
   :mark_translated_strings: false
   :url:

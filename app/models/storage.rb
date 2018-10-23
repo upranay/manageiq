@@ -18,7 +18,6 @@ class Storage < ApplicationRecord
   has_many :storage_files,       :dependent => :destroy
   has_many :storage_files_files, -> { where("rsc_type = 'file'") }, :class_name => "StorageFile", :foreign_key => "storage_id"
   has_many :files,               -> { where("rsc_type = 'file'") }, :class_name => "StorageFile", :foreign_key => "storage_id"
-  has_many :host_storages
 
   has_many :miq_events, :as => :target, :dependent => :destroy
 
@@ -832,16 +831,6 @@ class Storage < ApplicationRecord
 
   def vm_scan_affinity
     with_relationship_type("vm_scan_storage_affinity") { parents }
-  end
-
-  def self.batch_operation_supported?(operation, ids)
-    Storage.where(:id => ids).all? do |s|
-      if s.respond_to?("supports_#{operation}?")
-        s.public_send("supports_#{operation}?")
-      else
-        s.public_send("validate_#{operation}")[:available]
-      end
-    end
   end
 
   # @param [String, Storage] store_type upcased version of the storage type
