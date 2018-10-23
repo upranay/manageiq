@@ -39,6 +39,24 @@ describe Rbac::Filterer do
       expect(actual).to match(expected)
     end
 
+    it "doesn't filter by tags on classes that are not taggable" do
+      filter = MiqExpression.new(
+        "AND" => [
+          {"CONTAINS" => {"tag" => "managed-environment", "value" => "prod"}},
+          {"CONTAINS" => {"tag" => "managed-environment", "value" => "test"}}
+        ]
+      )
+      group = create_group_with_expression(filter)
+      user = FactoryGirl.create(:user, :miq_groups => [group])
+      request = FactoryGirl.create(:miq_provision_request, :tenant => owner_tenant, :requester => user)
+
+      actual, = Rbac::Filterer.search(:targets => MiqProvisionRequest, :user => user)
+
+      expect(request.class.include?(ActsAsTaggable)).to be_falsey
+      expected = [request]
+      expect(actual).to match(expected)
+    end
+
     def create_group_with_expression(expression)
       role = FactoryGirl.create(:miq_user_role)
       group = FactoryGirl.create(:miq_group, :tenant => Tenant.root_tenant, :miq_user_role => role)
@@ -783,29 +801,73 @@ describe Rbac::Filterer do
           let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
           let!(:cloud_template_root) { FactoryGirl.create(:template_cloud, :publicly_available => false) }
 
-          it 'returns all cloud templates when user is admin' do
-            results = described_class.filtered(TemplateCloud, :user => admin_user)
-            expect(results).to match_array(TemplateCloud.all)
-          end
+          let(:tenant_2) { FactoryGirl.create(:tenant, :parent => default_tenant, :source_type => 'CloudTenant') } # T2
+          let(:group_2) { FactoryGirl.create(:miq_group, :tenant => tenant_2) } # T1
+          let(:user_2) { FactoryGirl.create(:user, :miq_groups => [group_2]) }
 
-          context "when user is restricted user" do
-            let(:tenant_2) { FactoryGirl.create(:tenant, :parent => default_tenant, :source_type => 'CloudTenant') } # T2
-            let(:group_2) { FactoryGirl.create(:miq_group, :tenant => tenant_2) } # T1
-            let(:user_2) { FactoryGirl.create(:user, :miq_groups => [group_2]) }
-            let(:tenant_3) { FactoryGirl.create(:tenant, :parent => tenant_2) } # T3
-            let!(:cloud_template) { FactoryGirl.create(:template_cloud, :tenant => tenant_3, :publicly_available => true) }
-
-            it "returns all public cloud templates" do
-              results = described_class.filtered(TemplateCloud, :user => user_2)
-              expect(results).to match_array([cloud_template, cloud_template_root])
+          context "when tenant is not mapped to cloud tenant" do
+            it 'returns all cloud templates when user is admin' do
+              User.current_user = admin_user
+              results = described_class.filtered(TemplateCloud, :user => admin_user)
+              expect(results).to match_array(TemplateCloud.all)
             end
 
-            context "should ignore" do
-              let!(:cloud_template) { FactoryGirl.create(:template_cloud, :tenant => tenant_3, :publicly_available => false) }
-              it "private cloud templates" do
+            context "when user is restricted user" do
+              let(:tenant_3) { FactoryGirl.create(:tenant, :parent => tenant_2) } # T3
+              let!(:cloud_template) { FactoryGirl.create(:template_cloud, :tenant => tenant_3, :publicly_available => true) }
+
+              it "returns all public cloud templates" do
+                User.current_user = user_2
                 results = described_class.filtered(TemplateCloud, :user => user_2)
-                expect(results).to match_array([cloud_template_root])
+                expect(results).to match_array([cloud_template, cloud_template_root])
               end
+
+              context "should ignore other tenant's private cloud templates" do
+                let!(:cloud_template) { FactoryGirl.create(:template_cloud, :tenant => tenant_3, :publicly_available => false) }
+                it "returns public templates" do
+                  User.current_user = user_2
+                  results = described_class.filtered(TemplateCloud, :user => user_2)
+                  expect(results).to match_array([cloud_template_root])
+                end
+              end
+            end
+          end
+
+          context "when tenant is mapped to cloud tenant" do
+            let(:tenant_2) { FactoryGirl.create(:tenant, :parent => default_tenant, :source_type => 'CloudTenant', :source_id => 1) }
+
+            it "finds tenant's private cloud templates" do
+              cloud_template2 = FactoryGirl.create(:template_cloud, :tenant => tenant_2, :publicly_available => false)
+              User.current_user = user_2
+              results = described_class.filtered(TemplateCloud, :user => user_2)
+              expect(results).to match_array([cloud_template2])
+            end
+
+            it "finds tenant's private and public cloud templates" do
+              cloud_template2 = FactoryGirl.create(:template_cloud, :tenant => tenant_2, :publicly_available => false)
+              cloud_template3 = FactoryGirl.create(:template_cloud, :tenant => tenant_2, :publicly_available => true)
+              User.current_user = user_2
+              results = described_class.filtered(TemplateCloud, :user => user_2)
+              expect(results).to match_array([cloud_template2, cloud_template3])
+            end
+
+            it "ignores other tenant's private templates" do
+              cloud_template2 = FactoryGirl.create(:template_cloud, :tenant => tenant_2, :publicly_available => false)
+              cloud_template3 = FactoryGirl.create(:template_cloud, :tenant => tenant_2, :publicly_available => true)
+              FactoryGirl.create(:template_cloud, :tenant => default_tenant, :publicly_available => false)
+              User.current_user = user_2
+              results = described_class.filtered(TemplateCloud, :user => user_2)
+              expect(results).to match_array([cloud_template2, cloud_template3])
+            end
+
+            it "finds other tenant's public templates" do
+              cloud_template2 = FactoryGirl.create(:template_cloud, :tenant => tenant_2, :publicly_available => false)
+              cloud_template3 = FactoryGirl.create(:template_cloud, :tenant => tenant_2, :publicly_available => true)
+              cloud_template4 = FactoryGirl.create(:template_cloud, :tenant => default_tenant, :publicly_available => true)
+              FactoryGirl.create(:template_cloud, :tenant => default_tenant, :publicly_available => false)
+              User.current_user = user_2
+              results = described_class.filtered(TemplateCloud, :user => user_2)
+              expect(results).to match_array([cloud_template2, cloud_template3, cloud_template4])
             end
           end
         end

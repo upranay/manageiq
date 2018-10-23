@@ -1,4 +1,5 @@
 class ServiceAnsibleTower < Service
+  include AnsibleExtraVarsMixin
   include ServiceConfigurationMixin
   include ServiceOrchestrationOptionsMixin
 
@@ -9,7 +10,15 @@ class ServiceAnsibleTower < Service
 
   def launch_job
     job_class = "#{job_template.class.parent.name}::#{job_template.class.stack_type}".constantize
-    @job = job_class.create_job(job_template, job_options)
+    options = job_options.with_indifferent_access.deep_merge(
+      :extra_vars => {
+        'manageiq'            => service_manageiq_env,
+        'manageiq_connection' => manageiq_connection_env(evm_owner)
+      }
+    )
+    _log.info("Launching Ansible Tower job with options:")
+    $log.log_hashes(options)
+    @job = job_class.create_job(job_template, options)
     add_resource(@job)
     @job
   ensure
@@ -61,5 +70,16 @@ class ServiceAnsibleTower < Service
         params[attr[PASSWORD_PREFIX_LEN..-1]] = MiqPassword.decrypt(val)
       end
     end
+  end
+
+  def service_manageiq_env
+    {
+      'service' => href_slug
+    }.merge(manageiq_env(evm_owner, miq_group, miq_request_task))
+     .merge(request_options_extra_vars)
+  end
+
+  def request_options_extra_vars
+    miq_request_task.options.fetch_path(:request_options, :manageiq_extra_vars) || {}
   end
 end
