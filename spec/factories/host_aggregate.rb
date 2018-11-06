@@ -4,4 +4,5 @@ FactoryGirl.define do
   end
 
   factory :host_aggregate_openstack, :parent => :host_aggregate, :class => "ManageIQ::Providers::Openstack::CloudManager::HostAggregate"
+  factory :host_aggregate_telefonica, :parent => :host_aggregate, :class => "ManageIQ::Providers::Telefonica::CloudManager::HostAggregate"
 end

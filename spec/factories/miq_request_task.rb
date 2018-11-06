@@ -28,6 +28,7 @@ FactoryGirl.define do
   factory :miq_provision_azure,     :parent => :miq_provision_cloud, :class => "ManageIQ::Providers::Azure::CloudManager::Provision"
   factory :miq_provision_google,    :parent => :miq_provision_cloud, :class => "ManageIQ::Providers::Google::CloudManager::Provision"
   factory :miq_provision_openstack, :parent => :miq_provision_cloud, :class => "ManageIQ::Providers::Openstack::CloudManager::Provision"
+  factory :miq_provision_telefonica, :parent => :miq_provision_cloud, :class => "ManageIQ::Providers::Telefonica::CloudManager::Provision"
 
   # Automate
   factory :automation_task, :parent => :miq_request_task, :class => "AutomationTask"

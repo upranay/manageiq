@@ -15,6 +15,8 @@ FactoryGirl.define do
 
   factory :orchestration_stack_openstack, :parent => :orchestration_stack, :class => "ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack"
 
+  factory :orchestration_stack_telefonica, :parent => :orchestration_stack, :class => "ManageIQ::Providers::Telefonica::CloudManager::OrchestrationStack"
+
   factory :orchestration_stack_openstack_infra,
           :parent => :orchestration_stack,
           :class  => "ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack" do

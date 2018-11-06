@@ -271,8 +271,21 @@ FactoryGirl.define do
           :class   => "ManageIQ::Providers::Openstack::CloudManager",
           :parent  => :ems_cloud
 
+  factory :ems_telefonica,
+          :aliases => ["manageiq/providers/telefonica/cloud_manager"],
+          :class   => "ManageIQ::Providers::Telefonica::CloudManager",
+          :parent  => :ems_cloud
+
   factory :ems_openstack_with_authentication,
           :parent => :ems_openstack do
+    after :create do |x|
+      x.authentications << FactoryGirl.create(:authentication)
+      x.authentications << FactoryGirl.create(:authentication, :authtype => "amqp")
+    end
+  end
+
+  factory :ems_telefonica_with_authentication,
+          :parent => :ems_telefonica do
     after :create do |x|
       x.authentications << FactoryGirl.create(:authentication)
       x.authentications << FactoryGirl.create(:authentication, :authtype => "amqp")
@@ -282,6 +295,11 @@ FactoryGirl.define do
   factory :ems_openstack_network,
           :aliases => ["manageiq/providers/openstack/network_manager"],
           :class   => "ManageIQ::Providers::Openstack::NetworkManager",
+          :parent  => :ems_network
+
+  factory :ems_telefonica_network,
+          :aliases => ["manageiq/providers/telefonica/network_manager"],
+          :class   => "ManageIQ::Providers::Telefonica::NetworkManager",
           :parent  => :ems_network
 
   factory :ems_nuage_network,

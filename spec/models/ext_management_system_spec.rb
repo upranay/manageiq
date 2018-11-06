@@ -38,6 +38,8 @@ describe ExtManagementSystem do
       "openstack"                   => "OpenStack",
       "openstack_infra"             => "OpenStack Platform Director",
       "openstack_network"           => "OpenStack Network",
+      "telefonica"                  => "Telefonica",
+      "telefonica_network"          => "Telefonica Network",
       "lenovo_ph_infra"             => "Lenovo XClarity",
       "nuage_network"               => "Nuage Network Manager",
       "redfish_ph_infra"            => "Redfish",

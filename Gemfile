@@ -17,8 +17,15 @@ def manageiq_plugin(plugin_name)
   end
 end
 
-manageiq_plugin "manageiq-providers-ansible_tower" # can't move this down yet, because we can't autoload ManageIQ::Providers::AnsibleTower::Shared
-manageiq_plugin "manageiq-schema"
+
+def c2c_manageiq_plugin(plugin_name, branch_name)
+  unless dependencies.detect { |d| d.name == plugin_name }
+    gem plugin_name, :git => "https://github.com/Click2Cloud/#{plugin_name}", :branch => branch_name
+  end
+end
+
+c2c_manageiq_plugin "manageiq-providers-ansible_tower", "dev"
+c2c_manageiq_plugin "manageiq-schema", "dev-merge-231018"
 
 # Unmodified gems
 gem "activerecord-id_regions",        "~>0.2.0"
@@ -83,7 +90,10 @@ gem "american_date"
 #
 ### providers
 
-gem 'manageiq-providers-telefonica', :path => '../manageiq-providers-telefonica'
+#gem 'manageiq-providers-telefonica', :path => '../manageiq-providers-telefonica'
+#gem'manageiq-providers-telefonica' ,:require=>false, :git=>"https://github.com/click2cloud/manageiq-providers-telefonica.git", :branch=>"dev-aniket"
+#gem 'manageiq-providers-telefonica', :path => '/home/linux/Demo/manageiq-providers-telefonica'
+c2c_manageiq_plugin "manageiq-providers-telefonica", "dev-aniket"
 
 group :openstack, :manageiq_default do
   manageiq_plugin "manageiq-providers-openstack"
@@ -196,7 +206,7 @@ group :consumption, :manageiq_default do
 end
 
 group :ui_dependencies do # Added to Bundler.require in config/application.rb
-  manageiq_plugin "manageiq-ui-classic"
+  c2c_manageiq_plugin "manageiq-ui-classic", "dev-merge-231018"
   # Modified gems (forked on Github)
   gem "jquery-rjs",                   "=0.1.1",                       :git => "https://github.com/ManageIQ/jquery-rjs.git", :tag => "v0.1.1-1"
 end

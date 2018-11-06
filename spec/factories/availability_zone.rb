@@ -13,6 +13,10 @@ FactoryGirl.define do
 
   factory :availability_zone_openstack_null, :parent => :availability_zone_openstack, :class => "ManageIQ::Providers::Openstack::CloudManager::AvailabilityZoneNull"
 
+  factory :availability_zone_telefonica, :parent => :availability_zone, :class => "ManageIQ::Providers::Telefonica::CloudManager::AvailabilityZone"
+
+  factory :availability_zone_telefonica_null, :parent => :availability_zone_telefonica, :class => "ManageIQ::Providers::Telefonica::CloudManager::AvailabilityZoneNull"
+
   factory :availability_zone_google, :parent => :availability_zone, :class => "ManageIQ::Providers::Google::CloudManager::AvailabilityZone"
 
   factory :availability_zone_vmware,
