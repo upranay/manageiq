@@ -24,6 +24,9 @@ describe SecurityGroup do
         FactoryGirl.create(:network_port_openstack,
                            :device          => vm,
                            :security_groups => [sg])
+        FactoryGirl.create(:network_port_telefonica,
+                           :device          => vm,
+                           :security_groups => [sg])
       end
       expect(sg.reload.total_vms).to eq(2)
     end
