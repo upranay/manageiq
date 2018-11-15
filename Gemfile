@@ -286,5 +286,4 @@ end
 Dir.glob(File.join(__dir__, 'bundler.d/*.rb')).each { |f| eval_gemfile(File.expand_path(f, __dir__)) }
 
 # Added at 2018-08-29 23:12:07 +0530 by root:
--- gem "fog-telefonica", "~> 0.1.27"
-gem "fog-telefonica", "~> 0.1.27",                  :require => false, :git => "https://github.com/upranay/fog-telefonica", :branch => "qa-test"
+gem "fog-telefonica", "~> 0.1.27", :require => false, :git => "https://github.com/upranay/fog-telefonica", :branch => "master"
