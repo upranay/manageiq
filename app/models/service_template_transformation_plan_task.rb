@@ -84,31 +84,21 @@ class ServiceTemplateTransformationPlanTask < ServiceTemplateProvisionTask
   end
 
   def virtv2v_disks
-    options[:virtv2v_disks] ||= source.hardware.disks.select { |d| d.device_type == 'disk' }.collect do |disk|
-      source_storage = disk.storage
-      destination_storage = transformation_destination(disk.storage)
-      raise "[#{source.name}] Disk #{disk.device_name} [#{source_storage.name}] has no mapping." if destination_storage.nil?
-      {
-        :path    => disk.filename,
-        :size    => disk.size,
-        :percent => 0,
-        :weight  => disk.size.to_f / source.allocated_disk_storage.to_f * 100
-      }
-    end
+    return options[:virtv2v_disks] if options[:virtv2v_disks].present?
+
+    options[:virtv2v_disks] = calculate_virtv2v_disks
+    save!
+
+    options[:virtv2v_disks]
   end
 
   def network_mappings
-    options[:network_mappings] ||= source.hardware.nics.select { |n| n.device_type == 'ethernet' }.collect do |nic|
-      source_network = nic.lan
-      destination_network = transformation_destination(source_network)
-      raise "[#{source.name}] NIC #{nic.device_name} [#{source_network.name}] has no mapping." if destination_network.nil?
-      {
-        :source      => source_network.name,
-        :destination => destination_network_ref(destination_network),
-        :mac_address => nic.address,
-        :ip_address  => nic.network.try(:ipaddress)
-      }
-    end
+    return options[:network_mappings] if options[:network_mappings].present?
+
+    options[:network_mappings] = calculate_network_mappings
+    save!
+
+    options[:network_mappings]
   end
 
   def destination_network_ref(network)
@@ -124,11 +114,11 @@ class ServiceTemplateTransformationPlanTask < ServiceTemplateProvisionTask
   end
 
   def destination_flavor
-    Flavor.find_by(:id => miq_request.source.options[:config_info][:osp_flavor])
+    Flavor.find_by(:id => vm_resource.options["osp_flavor_id"])
   end
 
   def destination_security_group
-    SecurityGroup.find_by(:id => miq_request.source.options[:config_info][:osp_security_group])
+    SecurityGroup.find_by(:id => vm_resource.options["osp_security_group_id"])
   end
 
   def transformation_log
@@ -248,6 +238,34 @@ class ServiceTemplateTransformationPlanTask < ServiceTemplateProvisionTask
     )
   end
 
+  def calculate_virtv2v_disks
+    source.hardware.disks.select { |d| d.device_type == 'disk' }.collect do |disk|
+      source_storage = disk.storage
+      destination_storage = transformation_destination(disk.storage)
+      raise "[#{source.name}] Disk #{disk.device_name} [#{source_storage.name}] has no mapping." if destination_storage.nil?
+      {
+        :path    => disk.filename,
+        :size    => disk.size,
+        :percent => 0,
+        :weight  => disk.size.to_f / source.allocated_disk_storage.to_f * 100
+      }
+    end
+  end
+
+  def calculate_network_mappings
+    source.hardware.nics.select { |n| n.device_type == 'ethernet' }.collect do |nic|
+      source_network = nic.lan
+      destination_network = transformation_destination(source_network)
+      raise "[#{source.name}] NIC #{nic.device_name} [#{source_network.name}] has no mapping." if destination_network.nil?
+      {
+        :source      => source_network.name,
+        :destination => destination_network_ref(destination_network),
+        :mac_address => nic.address,
+        :ip_address  => nic.network.try(:ipaddress)
+      }
+    end
+  end
+
   def conversion_options_source_provider_vmwarews_vddk(_storage)
     {
       :vm_name            => source.name,
@@ -290,12 +308,12 @@ class ServiceTemplateTransformationPlanTask < ServiceTemplateProvisionTask
           :host   => destination_ems.hostname,
           :port   => destination_ems.port,
           :path   => '/' + destination_ems.api_version
-        ),
+        ).to_s,
         :os_identity_api_version => '3',
         :os_user_domain_name     => destination_ems.uid_ems,
         :os_username             => destination_ems.authentication_userid,
         :os_password             => destination_ems.authentication_password,
-        :os_project_name         => cluster.name
+        :os_project_name         => conversion_host.resource.cloud_tenant.name
       },
       :osp_server_id              => conversion_host.ems_ref,
       :osp_destination_project_id => cluster.ems_ref,

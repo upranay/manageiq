@@ -4,6 +4,9 @@ name,description,event_type,set_type
 #
 login_failed,Login failed,Default,authentication
 
+# Authorization
+user_created,User created,Default,authorization
+
 #
 # EVM Server operations
 #
@@ -180,6 +183,7 @@ request_orchestration_stack_retire,Orchestration Stack Retire Request,Default,or
 # Container Operations
 #
 request_containerimage_scan,Container Image Analysis Request,Default,container_operations
+containerimage_scan_abort,Container Image Analysis Failure,Default,container_operations
 containerimage_scan_complete,Container Image Analysis Complete,Default,container_operations
 containerimage_created,Container Image Discovered,Default,container_operations
 containerimage_compliance_check,Container Image Compliance Check,Default,compliance

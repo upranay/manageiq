@@ -1112,11 +1112,51 @@
       :feature_type: admin
       :identifier: ems_infra_change_password
 
-# Migration
-- :name: Migration
-  :description: Everything under Migration
+# V2V
+- :name: Migration Overview
+  :description: Migration Overview
   :feature_type: node
   :identifier: migration
+  :children:
+  - :name: Conversion Hosts
+    :description: Conversion Hosts
+    :feature_type: node
+    :identifier: conversion_host
+    :children:
+    - :name: View
+      :description: View Conversion Hosts
+      :feature_type: view
+      :identifier: conversion_host_view
+      :children:
+      - :name: List
+        :description: Display Lists of Conversion Hosts
+        :feature_type: view
+        :identifier: conversion_host_show_list
+      - :name: Show
+        :description: Display Individual Conversion Hosts
+        :feature_type: view
+        :identifier: conversion_host_show
+    - :name: Operate
+      :description: Perform Operations on Conversion Hosts
+      :feature_type: control
+      :identifier: conversion_host_control
+      :children:
+      - :name: Edit Tags
+        :description: Edit Tags of Conversion Hosts
+        :feature_type: control
+        :identifier: conversion_host_tag
+
+# V2V
+- :name: Infrastructure Mappings
+  :description: Infrastructure Mappings
+  :feature_type: node
+  :identifier: mappings
+
+# V2V
+- :name: Migration Settings
+  :description: Migration Settings
+  :feature_type: node
+  :identifier: migration_settings
 
 # Datacenters
 - :name: Datacenters
@@ -2440,34 +2480,34 @@
   - :name: Dialogs
     :description: Dialogs Accordion
     :feature_type: node
-    :hidden: true
+    :hidden: false
     :identifier: dialog_accord
     :children:
     - :name: Modify
       :description: Modify Dialogs
       :feature_type: admin
       :identifier: dialog_admin
-      :hidden: true
+      :hidden: false
       :children:
       - :name: Add
         :description: Add Dialog in the Dialog Editor
         :feature_type: admin
-        :hidden: true
+        :hidden: false
         :identifier: dialog_new_editor
       - :name: Edit
         :description: Edit Dialog in the Dialog Editor
         :feature_type: admin
-        :hidden: true
+        :hidden: false
         :identifier: dialog_edit_editor
       - :name: Copy
         :description: Copy Dialog
         :feature_type: admin
-        :hidden: true
+        :hidden: false
         :identifier: dialog_copy_editor
       - :name: Delete
         :description: Delete Dialog
         :feature_type: admin
-        :hidden: true
+        :hidden: false
         :identifier: dialog_delete
   - :name: Provisioning Dialogs
     :description: Provisioning Dialogs Accordion
@@ -6324,6 +6364,10 @@
     :description: Apply Config Pattern
     :feature_type: control
     :identifier: physical_server_apply_config_pattern
+  - :name: Execute Ansible Playbook
+    :description: Execute Ansible Playbook
+    :feature_type: control
+    :identifier: physical_infra_ansible
   - :name: Event Streams
     :description: Everything under Event Streams
     :feature_type: node
@@ -6395,6 +6439,14 @@
       :description: Display notifications
       :feature_type: view
       :identifier: sui_notifications
+    - :name: Metrics
+      :description: Display metrics
+      :feature_type: view
+      :identifier: sui_metrics
+    - :name: Tags
+      :description: Display tags
+      :feature_type: view
+      :identifier: sui_tags
   - :name: Dashboard
     :description: Dashboard features
     :feature_type: node

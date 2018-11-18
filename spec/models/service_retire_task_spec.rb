@@ -3,8 +3,7 @@ describe ServiceRetireTask do
   let(:vm) { FactoryGirl.create(:vm) }
   let(:service) { FactoryGirl.create(:service) }
   let(:miq_request) { FactoryGirl.create(:service_retire_request, :requester => user) }
-  let(:miq_request_task) { FactoryGirl.create(:miq_request_task, :miq_request_id => miq_request.id) }
-  let(:service_retire_task) { FactoryGirl.create(:service_retire_task, :source => service, :miq_request_task_id => miq_request_task.id, :miq_request_id => miq_request.id, :options => {:src_ids => [service.id] }) }
+  let(:service_retire_task) { FactoryGirl.create(:service_retire_task, :source => service, :miq_request => miq_request, :options => {:src_ids => [service.id] }) }
   let(:reason) { "Why Not?" }
   let(:approver) { FactoryGirl.create(:user_miq_request_approver) }
   let(:zone) { FactoryGirl.create(:zone, :name => "fred") }
@@ -21,8 +20,7 @@ describe ServiceRetireTask do
   end
 
   it "should initialize properly" do
-    expect(service_retire_task.state).to eq('pending')
-    expect(service_retire_task.status).to eq('Ok')
+    expect(service_retire_task).to have_attributes(:state => 'pending', :status => 'Ok')
   end
 
   describe "respond to update_and_notify_parent" do
@@ -87,10 +85,29 @@ describe ServiceRetireTask do
         service.service_resources << FactoryGirl.create(:service_resource, :resource_type => "VmOrTemplate", :service_id => service_c1.id, :resource_id => vm.id)
         service.service_resources << FactoryGirl.create(:service_resource, :resource_type => "VmOrTemplate", :service_id => service_c1.id, :resource_id => vm1.id)
         service.service_resources << FactoryGirl.create(:service_resource, :resource_type => "Service", :service_id => service_c1.id, :resource_id => service_c1.id)
+        service.service_resources << FactoryGirl.create(:service_resource, :resource_type => "ServiceTemplate", :service_id => service_c1.id, :resource_id => service_c1.id)
 
         @service_retire_task.after_request_task_create
         expect(VmRetireTask.count).to eq(2)
         expect(VmRetireTask.all.pluck(:message)).to eq(["Automation Starting", "Automation Starting"])
+        expect(ServiceRetireTask.count).to eq(1)
+        expect(ServiceRetireRequest.count).to eq(1)
+      end
+
+      it "doesn't creates subtask for ServiceTemplates" do
+        @service_retire_task = FactoryGirl.create(:service_retire_task, :source => service, :miq_request_task_id => nil, :miq_request_id => @miq_request.id, :options => {:src_ids => [service.id] })
+        service.service_resources << FactoryGirl.create(:service_resource, :resource_type => "ServiceTemplate", :service_id => service_c1.id, :resource_id => service_c1.id)
+
+        @service_retire_task.after_request_task_create
+        expect(ServiceRetireTask.count).to eq(1)
+        expect(ServiceRetireRequest.count).to eq(1)
+      end
+
+      it "doesn't creates subtask for service resources whose resources are nil" do
+        @service_retire_task = FactoryGirl.create(:service_retire_task, :source => service, :miq_request_task_id => nil, :miq_request_id => @miq_request.id, :options => {:src_ids => [service.id] })
+        service.service_resources << FactoryGirl.create(:service_resource, :resource_type => "ServiceTemplate", :service_id => service_c1.id, :resource => nil)
+
+        @service_retire_task.after_request_task_create
         expect(ServiceRetireTask.count).to eq(1)
         expect(ServiceRetireRequest.count).to eq(1)
       end
@@ -104,7 +121,6 @@ describe ServiceRetireTask do
     end
 
     it "updates the task state to pending" do
-      allow(MiqQueue).to receive(:put)
       expect(service_retire_task).to receive(:update_and_notify_parent).with(
         :state   => 'pending',
         :status  => 'Ok',
