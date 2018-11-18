@@ -24,7 +24,7 @@ manageiq_plugin "manageiq-schema"
 gem "activerecord-id_regions",        "~>0.2.0"
 gem "activerecord-session_store",     "~>1.1"
 gem "acts_as_tree",                   "~>2.7" # acts_as_tree needs to be required so that it loads before ancestry
-gem "ancestry",                       "~>2.2.1",       :require => false
+gem "ancestry",                       "~>3.0.4",       :require => false
 gem "bcrypt",                         "~> 3.1.10",     :require => false
 gem "bundler",                        ">=1.11.1",      :require => false
 gem "color",                          "~>1.8"
@@ -43,7 +43,7 @@ gem "inventory_refresh",              "~>0.1.1",       :require => false
 gem "kubeclient",                     "~>2.4",         :require => false # For scaling pods at runtime
 gem "linux_admin",                    "~>1.2.1",       :require => false
 gem "log_decorator",                  "~>0.1",         :require => false
-gem "manageiq-api-client",            "~>0.3.1",       :require => false
+gem "manageiq-api-client",            "~>0.3.2",       :require => false
 gem "manageiq-messaging",                              :require => false, :git => "https://github.com/ManageIQ/manageiq-messaging", :branch => "master"
 gem "manageiq-postgres_ha_admin",     "~>3.0",         :require => false
 gem "memoist",                        "~>0.15.0",      :require => false
@@ -62,7 +62,7 @@ gem "rake",                           ">=11.0",        :require => false
 gem "rest-client",                    "~>2.0.0",       :require => false
 gem "ripper_ruby_parser",             "~>1.2.0",       :require => false
 gem "ruby-progressbar",               "~>1.7.0",       :require => false
-gem "rubyzip",                        "~>1.2.1",       :require => false
+gem "rubyzip",                        "~>1.2.2",       :require => false
 gem "rugged",                         "~>0.27.0",      :require => false
 gem "simple-rss",                     "~>1.3.1",       :require => false
 gem "snmp",                           "~>1.2.0",       :require => false
