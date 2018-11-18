@@ -56,7 +56,8 @@
 #
 module SupportsFeatureMixin
   extend ActiveSupport::Concern
-
+  
+  #========================c2c ADDED
   QUERYABLE_FEATURES = {
     :add_host                            => 'Add Host',
     :add_interface                       => 'Add Interface',
@@ -131,7 +132,7 @@ module SupportsFeatureMixin
     :snapshots                           => 'Snapshots',
     :shutdown_guest                      => 'Shutdown Guest Operation',
     :start                               => 'Start',
-    :streaming_refresh                   => 'Streaming refresh',
+    :streaming_refresh                   => 'Streaming Refresh',
     :suspend                             => 'Suspending',
     :terminate                           => 'Terminate a VM',
     :timeline                            => 'Query for events',
@@ -143,7 +144,8 @@ module SupportsFeatureMixin
     :block_storage                       => 'Block Storage',
     :object_storage                      => 'Object Storage',
     :vm_import                           => 'VM Import',
-    :change_password                     => 'Change Password'
+    :change_password                     => 'Change Password',
+    :vm_destroy                          => 'Deleting a VM'
   }.freeze
 
   # Whenever this mixin is included we define all features as unsupported by default.

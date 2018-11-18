@@ -6,4 +6,5 @@ FactoryGirl.define do
   end
 
   factory :cloud_tenant_openstack, :class => "ManageIQ::Providers::Openstack::CloudManager::CloudTenant", :parent => :cloud_tenant
+  factory :cloud_tenant_telefonica, :class => "ManageIQ::Providers::Telefonica::CloudManager::CloudTenant", :parent => :cloud_tenant
 end

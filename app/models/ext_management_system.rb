@@ -54,9 +54,9 @@ class ExtManagementSystem < ApplicationRecord
 
   has_many :storages,       -> { distinct },          :through => :hosts
   has_many :ems_events,     -> { order("timestamp") }, :class_name => "EmsEvent",    :foreign_key => "ems_id",
-                                                      :inverse_of => :ext_management_system
+           :inverse_of => :ext_management_system
   has_many :generated_events, -> { order("timestamp") }, :class_name => "EmsEvent", :foreign_key => "generating_ems_id",
-                                                          :inverse_of => :generating_ems
+           :inverse_of => :generating_ems
   has_many :policy_events,  -> { order("timestamp") }, :class_name => "PolicyEvent", :foreign_key => "ems_id"
 
   has_many :blacklisted_events, :foreign_key => "ems_id", :dependent => :destroy, :inverse_of => :ext_management_system
@@ -221,18 +221,18 @@ class ExtManagementSystem < ApplicationRecord
                             end
 
       ems = ems_klass.create(
-        :ipaddress => ip,
-        :name      => "#{ems_name} (#{ip})",
-        :hostname  => hostname,
-        :zone_id   => MiqServer.my_server.zone.id
+          :ipaddress => ip,
+          :name      => "#{ems_name} (#{ip})",
+          :hostname  => hostname,
+          :zone_id   => MiqServer.my_server.zone.id
       )
 
       _log.info("Provider #{ems.name} created")
       AuditEvent.success(
-        :event        => "ems_created",
-        :target_id    => ems.id,
-        :target_class => "ExtManagementSystem",
-        :message      => "Provider %{provider_name} created" % {:provider_name => ems.name}
+          :event        => "ems_created",
+          :target_id    => ems.id,
+          :target_class => "ExtManagementSystem",
+          :message      => "Provider %{provider_name} created" % {:provider_name => ems.name}
       )
     end
   end
@@ -478,11 +478,11 @@ class ExtManagementSystem < ApplicationRecord
 
     _log.info(msg)
     task = MiqTask.create(
-      :name    => "Destroying #{self.class.name} with id: #{id}",
-      :state   => MiqTask::STATE_QUEUED,
-      :status  => MiqTask::STATUS_OK,
-      :message => msg,
-    )
+        :name    => "Destroying #{self.class.name} with id: #{id}",
+        :state   => MiqTask::STATE_QUEUED,
+        :status  => MiqTask::STATUS_OK,
+        :message => msg,
+        )
     self.class._queue_task('destroy', [id], task.id)
     task.id
   end
@@ -553,9 +553,9 @@ class ExtManagementSystem < ApplicationRecord
     folder ||= ems_folder_root
     return [] if folder.nil?
     folder.child_folder_paths(
-      :exclude_root_folder         => exclude_root_folder,
-      :exclude_datacenters         => true,
-      :exclude_non_display_folders => true
+        :exclude_root_folder         => exclude_root_folder,
+        :exclude_datacenters         => true,
+        :exclude_non_display_folders => true
     )
   end
 
@@ -666,12 +666,12 @@ class ExtManagementSystem < ApplicationRecord
 
   def stop_event_monitor_queue
     MiqQueue.put_unless_exists(
-      :class_name  => self.class.name,
-      :method_name => "stop_event_monitor",
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :zone        => my_zone,
-      :role        => "event"
+        :class_name  => self.class.name,
+        :method_name => "stop_event_monitor",
+        :instance_id => id,
+        :priority    => MiqQueue::HIGH_PRIORITY,
+        :zone        => my_zone,
+        :role        => "event"
     )
   end
 
@@ -691,8 +691,8 @@ class ExtManagementSystem < ApplicationRecord
 
   def blacklisted_event_names
     (
-      self.class.blacklisted_events.where(:enabled => true).pluck(:event_name) +
-      blacklisted_events.where(:enabled => true).pluck(:event_name)
+    self.class.blacklisted_events.where(:enabled => true).pluck(:event_name) +
+        blacklisted_events.where(:enabled => true).pluck(:event_name)
     ).uniq.sort
   end
 
@@ -711,18 +711,18 @@ class ExtManagementSystem < ApplicationRecord
 
   def self.inventory_status
     data = includes(:zone)
-           .select(:id, :parent_ems_id, :zone_id, :type, :name, :total_hosts, :total_vms, :total_clusters)
-           .map do |ems|
-             [
-               ems.region_id, ems.zone.name, ems.class.short_token, ems.name,
-               ems.total_clusters, ems.total_hosts, ems.total_vms, ems.total_storages,
-               ems.try(:containers).try(:count),
-               ems.try(:container_groups).try(:count),
-               ems.try(:container_images).try(:count),
-               ems.try(:container_nodes).try(:count),
-               ems.try(:container_projects).try(:count),
-             ]
-           end
+               .select(:id, :parent_ems_id, :zone_id, :type, :name, :total_hosts, :total_vms, :total_clusters)
+               .map do |ems|
+      [
+          ems.region_id, ems.zone.name, ems.class.short_token, ems.name,
+          ems.total_clusters, ems.total_hosts, ems.total_vms, ems.total_storages,
+          ems.try(:containers).try(:count),
+          ems.try(:container_groups).try(:count),
+          ems.try(:container_images).try(:count),
+          ems.try(:container_nodes).try(:count),
+          ems.try(:container_projects).try(:count),
+      ]
+    end
     return if data.empty?
     data = data.sort_by { |e| [e[0], e[1], e[2], e[3]] }
     # remove 0's (except for the region)

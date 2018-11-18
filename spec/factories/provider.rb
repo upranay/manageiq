@@ -16,6 +16,7 @@ FactoryGirl.define do
   end
 
   factory :provider_openstack, :class => "ManageIQ::Providers::Openstack::Provider", :parent => :provider
+  factory :provider_telefonica, :class => "ManageIQ::Providers::Telefonica::Provider", :parent => :provider
   factory(:provider_ansible_tower, :class => "ManageIQ::Providers::AnsibleTower::Provider", :parent => :provider) do
     url "example.com"
     trait(:with_authentication) do

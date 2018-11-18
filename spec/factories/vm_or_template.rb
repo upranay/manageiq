@@ -31,6 +31,10 @@ FactoryGirl.define do
     vendor "openstack"
   end
 
+  factory :template_telefonica, :class => "ManageIQ::Providers::Telefonica::CloudManager::Template", :parent => :template_cloud do
+    vendor "telefonica"
+  end
+
   factory :miq_template do
     name "ubuntu-16.04-stable"
     location "Minneapolis, MN"
@@ -123,6 +127,23 @@ FactoryGirl.define do
     trait :with_provider do
       after(:create) do |x|
         FactoryGirl.create(:ems_openstack, :vms => [x])
+      end
+    end
+  end
+
+  factory :vm_telefonica, :class => "ManageIQ::Providers::Telefonica::CloudManager::Vm", :parent => :vm_cloud do
+    vendor          "telefonica"
+    raw_power_state "ACTIVE"
+    sequence(:ems_ref) { |n| "some-uuid-#{seq_padded_for_sorting(n)}" }
+    cloud_tenant { FactoryGirl.create(:cloud_tenant_telefonica) }
+
+    factory :vm_perf_telefonica, :parent => :vm_telefonica do
+      ems_ref "telefonica-perf-vm"
+    end
+
+    trait :with_provider do
+      after(:create) do |x|
+        FactoryGirl.create(:ems_telefonica, :vms => [x])
       end
     end
   end

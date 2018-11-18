@@ -7,6 +7,8 @@ FactoryGirl.define do
                               :class  => "ManageIQ::Providers::Azure::NetworkManager::FloatingIp"
   factory :floating_ip_openstack, :parent => :floating_ip,
                                   :class  => "ManageIQ::Providers::Openstack::NetworkManager::FloatingIp"
+  factory :floating_ip_telefonica, :parent => :floating_ip,
+                                    :class  => "ManageIQ::Providers::Telefonica::NetworkManager::FloatingIp"
   factory :floating_ip_google, :parent => :floating_ip,
                                :class  => "ManageIQ::Providers::Google::NetworkManager::FloatingIp"
 end

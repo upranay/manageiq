@@ -5,4 +5,5 @@ FactoryGirl.define do
   end
 
   factory :cloud_volume_backup_openstack, :parent => :cloud_volume_backup, :class => "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup"
+  factory :cloud_volume_backup_telefonica, :parent => :cloud_volume_backup, :class => "ManageIQ::Providers::Telefonica::CloudManager::CloudVolumeBackup"
 end

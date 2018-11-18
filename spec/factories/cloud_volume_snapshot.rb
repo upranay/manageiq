@@ -9,4 +9,10 @@ FactoryGirl.define do
           :parent => :cloud_volume_snapshot do
     status "available"
   end
+
+  factory :cloud_volume_snapshot_telefonica,
+          :class  => "ManageIQ::Providers::Telefonica::CloudManager::CloudVolumeSnapshot",
+          :parent => :cloud_volume_snapshot do
+    status "available"
+  end
 end
