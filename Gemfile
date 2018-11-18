@@ -24,8 +24,8 @@ def c2c_manageiq_plugin(plugin_name, branch_name)
   end
 end
 
-c2c_manageiq_plugin "manageiq-providers-ansible_tower", "dev"
-c2c_manageiq_plugin "manageiq-schema", "dev-merge-231018"
+c2c_manageiq_plugin "manageiq-providers-ansible_tower", "master"
+c2c_manageiq_plugin "manageiq-schema", "master"
 
 # Unmodified gems
 gem "activerecord-id_regions",        "~>0.2.0"
@@ -93,7 +93,7 @@ gem "american_date"
 #gem 'manageiq-providers-telefonica', :path => '../manageiq-providers-telefonica'
 #gem'manageiq-providers-telefonica' ,:require=>false, :git=>"https://github.com/click2cloud/manageiq-providers-telefonica.git", :branch=>"dev-aniket"
 #gem 'manageiq-providers-telefonica', :path => '/home/linux/Demo/manageiq-providers-telefonica'
-c2c_manageiq_plugin "manageiq-providers-telefonica", "dev-aniket"
+c2c_manageiq_plugin "manageiq-providers-telefonica", "master"
 
 group :openstack, :manageiq_default do
   manageiq_plugin "manageiq-providers-openstack"
@@ -206,7 +206,7 @@ group :consumption, :manageiq_default do
 end
 
 group :ui_dependencies do # Added to Bundler.require in config/application.rb
-  c2c_manageiq_plugin "manageiq-ui-classic", "dev-merge-231018"
+  c2c_manageiq_plugin "manageiq-ui-classic", "master"
   # Modified gems (forked on Github)
   gem "jquery-rjs",                   "=0.1.1",                       :git => "https://github.com/ManageIQ/jquery-rjs.git", :tag => "v0.1.1-1"
 end
