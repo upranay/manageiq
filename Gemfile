@@ -49,36 +49,43 @@ gem "highline",                       "~>1.6.21",      :require => false
 gem "inifile",                        "~>3.0",         :require => false
 gem "inventory_refresh",              "~>0.1.1",       :require => false
 gem "kubeclient",                     "~>4.0",         :require => false # For scaling pods at runtime
-gem "linux_admin",                    "~>1.2.1",       :require => false
+gem "linux_admin",                    "~>2.0",         :require => false
 gem "log_decorator",                  "~>0.1",         :require => false
-gem "manageiq-api-client",            "~>0.3.2",       :require => false
-gem "manageiq-messaging",                              :require => false, :git => "https://github.com/ManageIQ/manageiq-messaging", :branch => "master"
-gem "manageiq-postgres_ha_admin",     "~>3.0",         :require => false
+gem "manageiq-api-client",            "~>0.3.4",       :require => false
+gem "manageiq-loggers",               "~>0.5.0",       :require => false
+gem "manageiq-messaging",             "~>0.1.4",       :require => false
+gem "manageiq-password",              "~>0.3",         :require => false
+gem "manageiq-postgres_ha_admin",     "~>3.1",         :require => false
+gem "manageiq-ssh-util",              "~>0.1.1",       :require => false
 gem "memoist",                        "~>0.15.0",      :require => false
 gem "mime-types",                     "~>3.0",         :path => File.expand_path("mime-types-redirector", __dir__)
-gem "more_core_extensions",           "~>3.5"
-gem "nakayoshi_fork",                 "~>0.0.3"  # provides a more CoW friendly fork (GC a few times before fork)
+gem "money",                          "~>6.13.5",      :require => false
+gem "more_core_extensions",           "~>3.7"
 gem "net-ldap",                       "~>0.16.1",      :require => false
 gem "net-ping",                       "~>1.7.4",       :require => false
-gem "openscap",                       "~>0.4.3",       :require => false
-gem "pg",                             "~>0.18.2",      :require => false
+gem "openscap",                       "~>0.4.8",       :require => false
+gem "optimist",                       "~>3.0",         :require => false
+gem "pg",                                              :require => false
 gem "pg-dsn_parser",                  "~>0.1.0",       :require => false
+gem "psych",                          "~>3.1",         :require => false # This can be dropped once we drop ruby 2.5
 gem "query_relation",                 "~>0.1.0",       :require => false
-gem "rails",                          "~>5.0.6"
+gem "rails",                          "~>5.2.4", ">=5.2.4.3"
 gem "rails-i18n",                     "~>5.x"
-gem "rake",                           ">=11.0",        :require => false
+gem "rake",                           ">=12.3.3",      :require => false
 gem "rest-client",                    "~>2.0.0",       :require => false
-gem "ripper_ruby_parser",             "~>1.2.0",       :require => false
+gem "ripper_ruby_parser",             "~>1.5.1",       :require => false
 gem "ruby-progressbar",               "~>1.7.0",       :require => false
-gem "rubyzip",                        "~>1.2.2",       :require => false
-gem "rugged",                         "~>0.27.0",      :require => false
-gem "simple-rss",                     "~>1.3.1",       :require => false
+gem "rubyzip",                        "~>2.0.0",       :require => false
 gem "snmp",                           "~>1.2.0",       :require => false
-gem "sqlite3",                                         :require => false
-gem "trollop",                        "~>2.1.3",       :require => false
+gem "sprockets",                      "~>3.7.2",       :require => false
+gem "sqlite3",                        "~>1.3.0",       :require => false
+gem "sync",                           "~>0.5",         :require => false
+gem "sys-filesystem",                 "~>1.3.4"
+gem "terminal",                                        :require => false
 
 # Modified gems (forked on Github)
-gem "ruport",                         "=1.7.0",                       :git => "https://github.com/ManageIQ/ruport.git", :tag => "v1.7.0-3"
+gem "rugged",                         "=0.28.2.2", :source => "http://rubygems.manageiq.org", :require => false
+gem "ruport",                         "=1.7.0.3",  :source => "http://rubygems.manageiq.org"
 
 # In 1.9.3: Time.parse uses british version dd/mm/yyyy instead of american version mm/dd/yyyy
 # american_date fixes this to be compatible with 1.8.7 until all callers can be converted to the 1.9.3 format prior to parsing.
