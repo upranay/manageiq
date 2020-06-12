@@ -24,7 +24,7 @@ def c2c_manageiq_plugin(plugin_name, branch_name)
   end
 end
 
-manageiq_plugin "manageiq-providers-ansible_tower", "master"
+manageiq_plugin "manageiq-providers-ansible_tower"
 c2c_manageiq_plugin "manageiq-schema", "master"
 
 # Unmodified gems
