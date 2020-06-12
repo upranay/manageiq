@@ -20,7 +20,7 @@
 
 ManageIQ is an open-source Management Platform that delivers the insight, control, and
 automation that enterprises need to address the challenges of managing hybrid
-IT environments.  It has the following feature sets :
+IT environments.  It has the following feature sets:
 
 * **Insight**: Discovery, Monitoring, Utilization, Performance, Reporting, Analytics, Chargeback, and Trending.
 * **Control**: Security, Compliance, Alerting, Policy-Based Resource and Configuration Management.
