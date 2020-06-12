@@ -20,11 +20,11 @@ end
 
 def c2c_manageiq_plugin(plugin_name, branch_name)
   unless dependencies.detect { |d| d.name == plugin_name }
-    gem plugin_name, :git => "https://github.com/Click2Cloud/#{plugin_name}", :branch => branch_name
+    gem plugin_name, :git => "https://github.com/upranay/#{plugin_name}", :branch => branch_name
   end
 end
 
-c2c_manageiq_plugin "manageiq-providers-ansible_tower", "master"
+manageiq_plugin "manageiq-providers-ansible_tower", "master"
 c2c_manageiq_plugin "manageiq-schema", "master"
 
 # Unmodified gems
@@ -282,4 +282,4 @@ end
 Dir.glob(File.join(__dir__, 'bundler.d/*.rb')).each { |f| eval_gemfile(File.expand_path(f, __dir__)) }
 
 # Added at 2018-08-29 23:12:07 +0530 by root:
-gem "fog-telefonica", "~> 0.1.27", :require => false, :git => "https://github.com/Click2Cloud/fog-telefonica", :branch => "master"
+gem "fog-telefonica", "~> 0.1.27", :require => false, :git => "https://github.com/upranay/fog-telefonica", :branch => "master"
